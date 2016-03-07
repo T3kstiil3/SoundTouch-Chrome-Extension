@@ -1,18 +1,14 @@
-$( document ).ready(function() {
-  $.ajax({
-      type: "GET",
-      url: "http://10.0.10.166:8090/now_playing",
-      dataType: "xml",
-      success: function (xml) {
-          console.log(xml);
-          //result = xml.city;
-          //$("#title").html(result);
-      },
-      error: function (xml) {
-          alert(xml.status + ' ' + xml.statusText);
-      }
-  });
-});
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "http://10.0.10.166:8090/now_playing", true);
+xhr.onreadystatechange = function() {
+  if (xhr.readyState == 4) {
+    var resp = JSON.parse(xhr.responseText);
+    document.getElementById("text").innerText = resp;
+  }
+}
+xhr.send();
+
+document.getElementById("title").innerText = "test de titre";
 
 document.querySelector('#go-to-options').addEventListener(function() {
   if (chrome.runtime.openOptionsPage) {
