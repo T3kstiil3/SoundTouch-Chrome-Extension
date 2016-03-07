@@ -11,11 +11,27 @@ header{
   width: 400px;
   margin-bottom: 20px;
   text-align: center;
+  font-weight: bold;
+  font-size: 15px;
 }
 
 header #settings_btn{
   float: right;
-  margin-right: 5px;
+  position: absolute;
+  right: 0px;
+  border: none;
+  background-color: white;
+  color: black;
+  font-size: 20px;
+  top: 0px;
+  padding: 7.5px 20px;
+  -webkit-transition: all 0.5s;
+  cursor: pointer;
+}
+
+header #settings_btn:hover{
+  color: white;
+  background: black;
 }
 
 #content{
@@ -24,4 +40,28 @@ header #settings_btn{
 
 #content #cover{
   max-width: 100%;
+}
+
+#noSettings{
+  text-align: center;
+}
+#noSettings span{
+  padding: 20px;
+  font-size: 18px;
+}
+#noSettings #loader{
+  padding: 25px;
+  font-size: 40px;
+}
+
+#noSettings button{
+  border: none;
+  background: black;
+  color: white;
+  width: 80%;
+  padding: 16px;
+  font-size: 12px;
+  margin: auto;
+  cursor: pointer;
+  margin-bottom: 20px;
 }

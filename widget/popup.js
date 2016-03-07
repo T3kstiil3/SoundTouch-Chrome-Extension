@@ -1,15 +1,34 @@
 document.addEventListener('DOMContentLoaded', function() {
 
   var xhr = new XMLHttpRequest();
+  var settings;
 
-  getNowPlaying();
+  //ELEMENT
+  var loaderSettings = document.getElementById("loaderSettings");
+  var loaderInformations = document.getElementById("loaderInformations");
+  var setSettingsMessage = document.getElementById("setSettingsMessage");
+  var settings_btn = document.getElementById('settings_btn');
+  var settings_btn2 = document.getElementById('settings_btn2');
+  var loader = document.getElementById("loader");
+  var main = document.getElementById("main");
+
+  chrome.storage.sync.get({
+    ip: '...'
+  }, function(items) {
+    settings = items;
+    getNowPlaying();
+  });
 
   //Now Playing display
   function getNowPlaying(){
-    var url = 'http://10.0.10.166:8090/now_playing';
+    loaderSettings.style.display = 'none';
+    loaderInformations.style.display = 'block';
+
+    var url = 'http://'+settings.ip+':8090/now_playing';
     xhr.open("GET", url, true);
     xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4) {
+
+      if (xhr.readyState == 4 && xhr.responseText != "") {
         if (window.DOMParser)
         {
           parser=new DOMParser();
@@ -23,7 +42,17 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById("artist").innerText = artist;
           document.getElementById("album").innerText = album;
           document.getElementById("cover").src = art;
+
+          loader.style.display = 'none';
+          loaderInformations.style.display = 'none';
+          main.style.display = 'block';
         }
+      }else{
+        loaderInformations.style.display = 'none';
+        loaderSettings.style.display = "none";
+        loader.style.display = "none";
+        setSettingsMessage.style.display = "block";
+        settings_btn2.style.display = "block";
       }
     }
     xhr.send();
@@ -45,9 +74,15 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   //GO to Settings
-  var settings_btn = document.getElementById('settings_btn');
-  settings_btn.addEventListener('click', function() {
-    console.log('gotosettings');
-  });
+  settings_btn.addEventListener('click', function() {openSettingsPage();});
+  settings_btn2.addEventListener('click', function() {openSettingsPage();});
+
+  function openSettingsPage(){
+    if (chrome.runtime.openOptionsPage) {
+     chrome.runtime.openOptionsPage();
+    } else {
+     window.open(chrome.runtime.getURL('options/options.html'));
+    }
+  }
 
 });

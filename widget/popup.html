@@ -8,20 +8,29 @@
   </head>
   <body>
     <header>SoundTouch Remote <button id="settings_btn"><i class="fa fa-cog"></i></button></header>
-    <div id="content">
-      <span id="track"></span><br>
-      <span id="artist"></span><br>
-      <span id="album"></span><br>
-      <img id="cover" alt="cover">
+    <div id="main" style="display:none;">
+      <div id="content">
+        <span id="track"></span><br>
+        <span id="artist"></span><br>
+        <span id="album"></span><br>
+        <img id="cover" alt="cover">
+      </div>
+      <div id="remote">
+        <button class="buttonRemote" type="button" name="button" value="PLAY"><i class="fa fa-play-circle-o"></i> Play</button>
+        <button class="buttonRemote" type="button" name="button" value="PAUSE"><i class="fa fa-pause-circle-o"></i> Pause</button>
+        <button class="buttonRemote" type="button" name="button" value="STOP"><i class="fa fa-stop-circle-o"></i> Stop</button>
+        <button class="buttonRemote" type="button" name="button" value="PREV_TRACK"><i class="fa fa-backward"></i> Prev Track</button>
+        <button class="buttonRemote" type="button" name="button" value="NEXT_TRACK">Next Track <i class="fa fa-forward"></i></button>
+        <button class="buttonRemote" type="button" name="button" value="VOLUME_UP"><i class="fa fa-volume-up"></i> Volume +</button>
+        <button class="buttonRemote" type="button" name="button" value="VOLUME_DOWN"><i class="fa fa-volume-down"></i> Volume -</button>
+      </div>
     </div>
-    <div id="remote">
-      <button class="buttonRemote" type="button" name="button" value="PLAY"><i class="fa fa-play-circle-o"></i> Play</button>
-      <button class="buttonRemote" type="button" name="button" value="PAUSE"><i class="fa fa-pause-circle-o"></i> Pause</button>
-      <button class="buttonRemote" type="button" name="button" value="STOP"><i class="fa fa-stop-circle-o"></i> Stop</button>
-      <button class="buttonRemote" type="button" name="button" value="PREV_TRACK"><i class="fa fa-backward"></i> Prev Track</button>
-      <button class="buttonRemote" type="button" name="button" value="NEXT_TRACK">Next Track <i class="fa fa-forward"></i></button>
-      <button class="buttonRemote" type="button" name="button" value="VOLUME_UP"><i class="fa fa-volume-up"></i> Volume +</button>
-      <button class="buttonRemote" type="button" name="button" value="VOLUME_DOWN"><i class="fa fa-volume-down"></i> Volume -</button>
+    <div id="noSettings">
+      <span id="loaderSettings">Loading Settings</span>
+      <span id="loaderInformations" style="display:none;">Loading Track Informations</span>
+      <span id="setSettingsMessage" style="display:none;">Missing or Bad settings</span>
+      <i id="loader" class="fa fa-circle-o-notch fa-spin"></i>
+      <button id="settings_btn2" style="display:none;"><i class="fa fa-cog"></i> Set settings</button>
     </div>
   </body>
 </html>
