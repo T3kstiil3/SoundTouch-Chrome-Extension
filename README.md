@@ -3,3 +3,9 @@ SoundTouch Chrome Extension, Display the current playing music, control the Soun
 
 # Preview
 ![Preview img](img/preview.jpg)
+
+# TODO
+- Settings page
+- Search SoundTouch IP
+- Style Popup
+- ...
