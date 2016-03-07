@@ -2,11 +2,26 @@
 <html>
   <head>
     <title>SoundTouch Chrome Extenstion</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="popup.css" rel="stylesheet">
     <script src="popup.js"></script>
   </head>
   <body>
-    <button id="go-to-options">Go to options</button>
-    <h2 id="title"></h2>
-    <span id="text">test</span>
+    <header>SoundTouch Remote <button id="settings_btn"><i class="fa fa-cog"></i></button></header>
+    <div id="content">
+      <span id="track"></span><br>
+      <span id="artist"></span><br>
+      <span id="album"></span><br>
+      <img id="cover" alt="cover">
+    </div>
+    <div id="remote">
+      <button class="buttonRemote" type="button" name="button" value="PLAY"><i class="fa fa-play-circle-o"></i> Play</button>
+      <button class="buttonRemote" type="button" name="button" value="PAUSE"><i class="fa fa-pause-circle-o"></i> Pause</button>
+      <button class="buttonRemote" type="button" name="button" value="STOP"><i class="fa fa-stop-circle-o"></i> Stop</button>
+      <button class="buttonRemote" type="button" name="button" value="PREV_TRACK"><i class="fa fa-backward"></i> Prev Track</button>
+      <button class="buttonRemote" type="button" name="button" value="NEXT_TRACK">Next Track <i class="fa fa-forward"></i></button>
+      <button class="buttonRemote" type="button" name="button" value="VOLUME_UP"><i class="fa fa-volume-up"></i> Volume +</button>
+      <button class="buttonRemote" type="button" name="button" value="VOLUME_DOWN"><i class="fa fa-volume-down"></i> Volume -</button>
+    </div>
   </body>
 </html>

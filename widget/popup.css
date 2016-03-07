@@ -1,0 +1,27 @@
+html,body{
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+header{
+  background:black;
+  color: white;
+  padding: 10px 20px;
+  width: 400px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+header #settings_btn{
+  float: right;
+  margin-right: 5px;
+}
+
+#content{
+  padding: 20px;
+}
+
+#content #cover{
+  max-width: 100%;
+}
