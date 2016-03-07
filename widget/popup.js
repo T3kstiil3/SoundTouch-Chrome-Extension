@@ -8,7 +8,7 @@ xhr.onreadystatechange = function() {
 }
 xhr.send();
 
-document.getElementById("title").innerText = "test de titre";
+document.getElementById("title").innerText = "Test de Titre";
 
 document.querySelector('#go-to-options').addEventListener(function() {
   if (chrome.runtime.openOptionsPage) {
