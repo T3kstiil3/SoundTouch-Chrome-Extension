@@ -10,10 +10,19 @@
     <header>SoundTouch Remote <button id="settings_btn"><i class="fa fa-cog"></i></button></header>
     <div id="main" style="display:none;">
       <div id="content">
-        <span id="track"></span><br>
-        <span id="artist"></span><br>
-        <span id="album"></span><br>
-        <img id="cover" alt="cover">
+        <div class="left">
+          <img id="cover" class="cover" alt="cover">
+        </div>
+        <div class="right">
+          <h3>Track</h3>
+          <span id="track"></span>
+          <h3>Artist</h3>
+          <span id="artist"></span>
+          <h3>Album</h3>
+          <span id="album"></span><br>
+        </div>
+        <div class="progressBar"></div>
+        <div class="timeInfo">...</div>
       </div>
       <div id="remote">
         <button class="buttonRemote" type="button" name="button" value="PLAY"><i class="fa fa-play-circle-o"></i> Play</button>

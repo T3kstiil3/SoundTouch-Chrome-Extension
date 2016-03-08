@@ -35,11 +35,58 @@ header #settings_btn:hover{
 }
 
 #content{
-  padding: 20px;
+  width: 100%;
 }
 
-#content #cover{
+#content .left{
+  width: 50%;
+  display: inline-block;
+}
+
+#content .right{
+  width: 49%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.cover{
   max-width: 100%;
+}
+
+#content .progressBar{
+  width: 0.1%;
+  height: 5px;
+  background: #7AB8E4;
+  margin-bottom: 10px;
+}
+
+#content .timeInfo{
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+#remote{
+
+}
+
+#remote button{
+  border: none;
+  width: 32%;
+  margin: 0;
+  margin: auto 0%;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 6px 0px;
+  color: white;
+  transition: all .2s ease-in-out;
+}
+
+#remote button:hover{
+    color: black;
+    transform: scale(1.1);
 }
 
 #noSettings{
