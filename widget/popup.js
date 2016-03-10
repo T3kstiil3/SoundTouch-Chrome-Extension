@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+  //https://dribbble.com/shots/2282786-Bop-Web-Player/attachments/431768
+
   var xhr = new XMLHttpRequest();
   var settings;
   var timer;
