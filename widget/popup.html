@@ -3,26 +3,25 @@
   <head>
     <title>SoundTouch Chrome Extenstion</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,400' rel='stylesheet' type='text/css'>
     <link href="popup.css" rel="stylesheet">
     <script src="popup.js"></script>
   </head>
   <body>
-    <header>SoundTouch Remote <button id="settings_btn"><i class="fa fa-cog"></i></button></header>
     <div id="main" style="display:none;">
       <div id="content">
-        <div class="left">
-          <img id="cover" class="cover" alt="cover">
+        <div id="cover" class="cover">
+          <div class="timeInfo">...</div>
         </div>
-        <div class="right">
-          <h3>Track</h3>
-          <span id="track"></span>
-          <h3>Artist</h3>
-          <span id="artist"></span>
-          <h3>Album</h3>
-          <span id="album"></span><br>
+        <div class="progressBarContenair">
+          <div class="progressBar"></div>
         </div>
-        <div class="progressBar"></div>
-        <div class="timeInfo">...</div>
+
+        <span id="track"></span>
+        <span id="album"></span>
+        <span id="artist"></span>
+
       </div>
       <div id="remote">
         <div class="content_remote">

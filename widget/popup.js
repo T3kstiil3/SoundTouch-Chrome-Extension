@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById("track").innerText = track;
           document.getElementById("artist").innerText = artist;
           document.getElementById("album").innerText = album;
-          document.getElementById("cover").src = art;
+          document.getElementById("cover").style.backgroundImage = "url('"+art+"')";
 
           noSettings.style.display = 'none';
           loaderInformations.style.display = 'none';

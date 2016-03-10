@@ -2,6 +2,7 @@ html,body{
     padding: 0;
     margin: 0;
     border: none;
+    font-family: Raleway;
 }
 
 header{
@@ -13,7 +14,7 @@ header{
   text-align: center;
   font-weight: bold;
   font-size: 15px;
-  overflow-y: hidden; 
+  overflow-y: hidden;
 }
 
 header #settings_btn{
@@ -51,21 +52,76 @@ header #settings_btn:hover{
 }
 
 .cover{
-  max-width: 100%;
+  width: 400px;
+  height: 400px;
+  background-size: cover;
+  background-position: inherit;
+  overflow: hidden;
+  position: relative;
+}
+
+#content .progressBarContenair{
+    height: 5px;
+    top: 395px;
+    position: absolute;
+    width: 100%;
+    background: rgba(255,255,255, 0.5);
 }
 
 #content .progressBar{
   width: 0.1%;
   height: 5px;
-  background: #7AB8E4;
+  background: #FF9929;
   margin-bottom: 10px;
 }
 
+#content .cover:hover .timeInfo{
+  transform: translateY(0px);
+}
+
 #content .timeInfo{
-  width: 100%;
+  transition: all .2s ;
+  font-family: 'Open Sans', sans-serif;
   text-align: center;
-  font-weight: bold;
+  transform: translateY(100px);
   margin-bottom: 8px;
+  position: absolute;
+  top: 365px;
+  color: white;
+  width: 100px;
+  border-radius: 5px;
+  background: #FF9929;
+  padding: 2px 10px;
+  left: 50%;
+  margin-left: -60px;
+}
+
+#track{
+  display: block;
+  text-align: center;
+  padding: 20px 20px 4px 20px;
+  font-size: 21px;
+  font-weight: normal;
+  color: #394A5A;
+}
+
+#album{
+  color: #394A5A;
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bolder;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#artist{
+  color: #FF9929;
+  display: block;
+  text-align: center;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 #remote{
