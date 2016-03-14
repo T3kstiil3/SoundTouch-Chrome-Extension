@@ -53,7 +53,7 @@ header #settings_btn:hover{
 
 .cover{
   width: 400px;
-  height: 400px;
+  height: 300px;
   background-size: cover;
   background-position: inherit;
   overflow: hidden;
@@ -62,7 +62,7 @@ header #settings_btn:hover{
 
 #content .progressBarContenair{
     height: 5px;
-    top: 395px;
+    top: 295px;
     position: absolute;
     width: 100%;
     background: rgba(255,255,255, 0.5);
@@ -122,6 +122,86 @@ header #settings_btn:hover{
   padding: 5px;
   font-weight: bold;
   font-size: 16px;
+}
+
+.buttonRemote{
+  cursor: pointer;
+}
+
+.volumeControl{
+  color: #708696;
+  display: flex;
+  margin-top: 5px;
+  font-size: 28px;
+  justify-content: center;
+}
+
+.volumeControl .volumeBarContenair{
+  background: #CDD9DE;
+  width: 60%;
+  height: 5px;
+  margin: 10px 15px;
+  border-radius: 20px;
+}
+
+.volumeControl .volumeBar{
+  background: #708696;
+  width: 30%;
+  height: 5px;
+  border-radius: 20px;
+}
+
+.trackControl{
+  display: flex;
+  margin: 5px 0px;
+  font-size: 28px;
+  align-items: center;
+  justify-content: center;
+  color:#5A6F81;
+}
+.trackControl .fa-play{
+  border: 2px solid #D1D8DD;
+  border-radius: 50%;
+  padding: 25px 29px;
+  font-size: 30px;
+  height: 29.5px;
+  width: 21px;
+  text-align: center;
+  margin: 0px 10px;
+}
+.trackControl .fa-forward,.trackControl .fa-backward{
+  border: 2px solid #D1D8DD;
+  border-radius: 50%;
+  padding: 14px;
+  font-size: 18px;
+  margin: 0px 5px;
+}
+
+.trackControl .fa-forward{
+  padding-left: 18px;
+  height: 18px;
+  width: 14px;
+  margin-right: 20px;
+}
+
+.trackControl .fa-backward{
+  padding-right: 18px;
+  height: 18px;
+  width: 14px;
+  margin-left: 20px;
+}
+
+
+.trackControl .fa-heart{
+  color: #EE0760;
+}
+
+.musicSource{
+  font-size: 18px;
+  font-weight: normal;
+  color: #5989B6;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 #remote{

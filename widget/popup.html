@@ -1,36 +1,57 @@
 <!doctype html>
-<html>
+<html ng-app="app">
   <head>
     <title>SoundTouch Chrome Extenstion</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,400' rel='stylesheet' type='text/css'>
-    <link href="popup.css" rel="stylesheet">
-    <script src="popup.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <script src="../js/angular.min.js"></script>
+    <script src="app.js"></script>
   </head>
   <body>
-    <div id="main" style="display:none;">
+    <div id="main" ng-controller="RemoteController as remote">
       <div id="content">
-        <div id="cover" class="cover">
-          <div class="timeInfo">...</div>
+        <div id="cover" class="cover" style="background:url({{remote.art}})">
+          <div class="timeInfo">{{remote.timeInfo}}</div>
         </div>
         <div class="progressBarContenair">
-          <div class="progressBar"></div>
+          <div class="progressBar" style="width:{{remote.progressBar}}%;"></div>
         </div>
 
-        <span id="track"></span>
-        <span id="album"></span>
-        <span id="artist"></span>
-
+        <span id="track">{{remote.track}}</span>
+        <span id="album">{{remote.album}}</span>
+        <span id="artist">{{remote.artist}}</span>
       </div>
-      <div id="remote">
+
+      <div class="trackControl">
+        <i class="fa fa-stop buttonRemote" ng-mouseup="remote.pushUpButton('STOP')"></i>
+        <i class="fa fa-backward buttonRemote" ng-mouseup="remote.pushUpButton('PREV_TRACK')"></i>
+        <i class="fa fa-play buttonRemote" ng-mouseup="remote.pushUpButton('PLAY_PAUSE')"></i>
+        <i class="fa fa-forward buttonRemote" ng-mouseup="remote.pushUpButton('NEXT_TRACK')"></i>
+        <i class="fa {{remote.ratingClass}} buttonRemote" ng-mouseup="remote.pushUpButton('FAVORITE')"></i>
+      </div>
+
+      <div class="volumeControl">
+        <i class="fa fa-volume-down buttonRemote" ng-mouseup="remote.pushButton('VOLUME_DOWN')" ng-mousedown="remote.pushDownButton('VOLUME_DOWN')"></i>
+        <div class="volumeBarContenair">
+          <div class="volumeBar"></div>
+        </div>
+        <i class="fa fa-volume-up buttonRemote" ng-mouseup="remote.pushButton('VOLUME_UP')" ng-mousedown="remote.pushDownButton('VOLUME_UP')"></i>
+      </div>
+
+      <div class="musicSource">
+        <span>{{remote.source}}</span>
+      </div>
+
+      <div id="remote" style="display:none;">
         <div class="content_remote">
-          <button class="buttonRemote" type="button" name="button" value="PLAY_PAUSE"><i class="fa fa-play-circle-o"></i><i class="fa fa-pause-circle-o"></i> Play/Pause</button>
-          <button class="buttonRemote" type="button" name="button" value="STOP"><i class="fa fa-stop-circle-o"></i> Stop</button>
+          <button class="buttonRemote" type="button" name="button" value="PLAY_PAUSE"><i class="fa fa-play-circle-o"></i><i class="fa fa-pause-circle-o"></i></button>
+          <button class="buttonRemote" type="button" name="button" value="STOP"><i class="fa fa-stop-circle-o"></i></button>
         </div>
 
         <div class="content_remote">
-          <button class="buttonRemote" type="button" name="button" value="PREV_TRACK"><i class="fa fa-backward"></i> Prev Track</button>
+          <button class="buttonRemote" type="button" name="button" value="PREV_TRACK"><i class="fa fa-backward"></i></button>
           <button class="buttonRemote" type="button" name="button" value="NEXT_TRACK">Next Track <i class="fa fa-forward"></i></button>
         </div>
 
