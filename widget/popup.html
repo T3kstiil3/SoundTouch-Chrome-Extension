@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="app">
+<html>
   <head>
     <title>SoundTouch Chrome Extenstion</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -9,11 +9,11 @@
     <script src="../js/angular.min.js"></script>
     <script src="app.js"></script>
   </head>
-  <body>
-    <div id="main" ng-controller="RemoteController as remote">
+  <body ng-app="app">
+    <div id="main" ng-class="remote.showSettings ? 'moveUp': ''" ng-controller="RemoteController as remote">
       <div id="content">
         <div id="cover" class="cover" style="background:url({{remote.art}})">
-          <div class="timeInfo">{{remote.timeInfo}}</div>
+          <div ng-if="remote.timeInfo" class="timeInfo">{{remote.timeInfo}}</div>
         </div>
         <div class="progressBarContenair">
           <div class="progressBar" style="width:{{remote.progressBar}}%;"></div>
@@ -35,39 +35,42 @@
       <div class="volumeControl">
         <i class="fa fa-volume-down buttonRemote" ng-mouseup="remote.pushButton('VOLUME_DOWN')" ng-mousedown="remote.pushDownButton('VOLUME_DOWN')"></i>
         <div class="volumeBarContenair">
-          <div class="volumeBar"></div>
+          <div class="volumeBar" style="width:{{remote.volumeBar}}%;"></div>
         </div>
         <i class="fa fa-volume-up buttonRemote" ng-mouseup="remote.pushButton('VOLUME_UP')" ng-mousedown="remote.pushDownButton('VOLUME_UP')"></i>
       </div>
 
-      <div class="musicSource">
-        <span>{{remote.source}}</span>
+      <div class="footerPopup">
+        <i class="fa fa-list-ul" ng-style="{opacity : ((remote.showSettings) && '0') || '1'}"></i>
+        <span ng-if="!remote.showSettings">{{remote.source}}</span>
+        <span ng-if="remote.showSettings">Settings</span>
+        <i class="fa" ng-class="remote.showSettings ? 'fa-times': 'fa-cog'" ng-click="remote.toggleSettings()"></i>
       </div>
 
-      <div id="remote" style="display:none;">
-        <div class="content_remote">
-          <button class="buttonRemote" type="button" name="button" value="PLAY_PAUSE"><i class="fa fa-play-circle-o"></i><i class="fa fa-pause-circle-o"></i></button>
-          <button class="buttonRemote" type="button" name="button" value="STOP"><i class="fa fa-stop-circle-o"></i></button>
-        </div>
-
-        <div class="content_remote">
-          <button class="buttonRemote" type="button" name="button" value="PREV_TRACK"><i class="fa fa-backward"></i></button>
-          <button class="buttonRemote" type="button" name="button" value="NEXT_TRACK">Next Track <i class="fa fa-forward"></i></button>
-        </div>
-
-        <div class="content_remote">
-          <button class="buttonRemote" type="button" name="button" value="VOLUME_DOWN"><i class="fa fa-volume-down"></i> Volume -</button>
-          <button class="buttonRemote" type="button" name="button" value="VOLUME_UP"><i class="fa fa-volume-up"></i> Volume +</button>
-        </div>
-
-        <div class="content_remote">
-          <button class="buttonRemote" type="button" name="button" value="REMOVE_FAVORITE"><i class="fa fa-thumbs-down"></i></button>
-          <button class="buttonRemote" type="button" name="button" value="ADD_FAVORITE"><i class="fa fa-thumbs-up"></i></button>
-        </div>
-
-      </div>
     </div>
-    <div id="noSettings">
+
+    <div ng-controller="SettingsController as settings" class="settings">
+
+      <button ng-if='!settings.name && !settings.scanProgress' ng-click="settings.scanNetwork()">
+        <i class="fa fa-wifi"></i>
+        Scan
+      </button>
+
+      <i id="loader" ng-if='settings.scanProgress' class="fa fa-circle-o-notch fa-spin"></i>
+
+      <ul ng-if="settings.devices.length">
+        <li ng-repeat="device in settings.devices">
+          <h3>{{device.name}}</h3>
+          <h3>{{device.type}}</h3>
+          <h3>{{device.ipAddress}}</h3>
+          <h3><img ng-src="{{device.imgUrl}}" alt="" /></h3>
+        </li>
+      </ul>
+
+      <h3 ng-if="vm.devices && vm.devices.length == 0 && !settings.scanProgress">No device found :'(</h3>
+
+    </div>
+    <div id="noSettings" ng-if="0">
       <button class="buttonRemote" type="button" name="button" value="POWER"><i class="fa fa-power-off"></i></button>
       <span id="loaderSettings">Loading Settings</span>
       <span id="loaderInformations" style="display:none;">Loading Track Informations</span>
