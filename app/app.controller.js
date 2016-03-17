@@ -1,15 +1,19 @@
 angular
   .module('app', [])
   .config( [
-      '$compileProvider',
-      function( $compileProvider ) {
+      '$compileProvider','$logProvider',
+      function( $compileProvider,$logProvider) {
+
+          //Image src
           var currentImgSrcSanitizationWhitelist = $compileProvider.imgSrcSanitizationWhitelist();
           var newImgSrcSanitizationWhiteList = currentImgSrcSanitizationWhitelist.toString().slice(0,-1)
           + '|chrome-extension:'
           +currentImgSrcSanitizationWhitelist.toString().slice(-1);
-
           console.log("Changing imgSrcSanitizationWhiteList from "+currentImgSrcSanitizationWhitelist+" to "+newImgSrcSanitizationWhiteList);
           $compileProvider.imgSrcSanitizationWhitelist(newImgSrcSanitizationWhiteList);
+
+          //Error Log
+          $logProvider.debugEnabled(false);
       }
   ]);
 
@@ -90,6 +94,7 @@ function RemoteController($scope,$http,settingsService) {
         if(xmlDoc.getElementsByTagName("track")[0]){
 
           vm.source = xmlDoc.getElementsByTagName("ContentItem")[0].getAttribute("source");
+
           if(vm.source == "BLUETOOTH"){
             vm.track = xmlDoc.getElementsByTagName("stationName")[0].childNodes[0].nodeValue;
             vm.art = "img/bluetooth_bg.jpg";
@@ -99,6 +104,7 @@ function RemoteController($scope,$http,settingsService) {
             vm.album = xmlDoc.getElementsByTagName("album")[0].childNodes[0].nodeValue;
             vm.art = xmlDoc.getElementsByTagName("art")[0].childNodes[0].nodeValue;
             vm.rating = xmlDoc.getElementsByTagName("rating")[0].childNodes[0].nodeValue;
+            vm.itemName = xmlDoc.getElementsByTagName("itemName")[0].childNodes[0].nodeValue;
             time = xmlDoc.getElementsByTagName("time")[0].childNodes[0].nodeValue;
             totalTime = xmlDoc.getElementsByTagName("time")[0].getAttribute("total");
           }
@@ -109,16 +115,12 @@ function RemoteController($scope,$http,settingsService) {
             vm.ratingClass = "fa-heart-o";
           }
 
-          //noSettings.style.display = 'none';
-          //loaderInformations.style.display = 'none';
-          main.style.display = 'block';
-
-
-          if(!vm.source == "BLUETOOTH"){
-            clearInterval(timer);
+          getVolume();
+          clearInterval(timer);
+          if(vm.source != "BLUETOOTH"){
             timer = setInterval(function() {Horloge();}, 1000);
           }
-          getVolume();
+
         }
       }
     });
@@ -154,6 +156,12 @@ function RemoteController($scope,$http,settingsService) {
   }
 
   function pushUpButton(button){
+    if(button == "FAVORITE"){
+      if(vm.rating == 'UP')
+        button = "REMOVE_FAVORITE";
+      else
+        button = "ADD_FAVORITE";
+    }
     var url = 'http://'+vm.device.ipAddress+':8090/key';
     xhr.open("POST", url, true);
     xhr.send('<?xml version="1.0" encoding="UTF-8" ?><key state="release" sender="Gabbo">'+button+'</key>');

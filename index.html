@@ -23,11 +23,11 @@
       </div>
 
       <div class="trackControl">
-        <i class="fa fa-stop buttonRemote" ng-mouseup="remote.pushUpButton('STOP')"></i>
-        <i class="fa fa-backward buttonRemote" ng-mouseup="remote.pushUpButton('PREV_TRACK')"></i>
-        <i class="fa fa-play buttonRemote" ng-mouseup="remote.pushUpButton('PLAY_PAUSE')"></i>
-        <i class="fa fa-forward buttonRemote" ng-mouseup="remote.pushUpButton('NEXT_TRACK')"></i>
-        <i class="fa {{remote.ratingClass}} buttonRemote" ng-mouseup="remote.pushUpButton('FAVORITE')"></i>
+        <i class="fa fa-stop buttonRemote" ng-mousedown="remote.pushDownButton('STOP')"></i>
+        <i class="fa fa-backward buttonRemote" ng-mousedown="remote.pushDownButton('PREV_TRACK')"></i>
+        <i class="fa fa-play buttonRemote" ng-mousedown="remote.pushDownButton('PLAY_PAUSE')"></i>
+        <i class="fa fa-forward buttonRemote" ng-mousedown="remote.pushDownButton('NEXT_TRACK')"></i>
+        <i class="fa {{remote.ratingClass}} buttonRemote" ng-mousedown="remote.pushDownButton('FAVORITE')"></i>
       </div>
 
       <div class="volumeControl">

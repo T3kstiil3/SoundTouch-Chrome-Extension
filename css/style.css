@@ -303,6 +303,7 @@ svg:root{
   list-style: none;
   padding: 10px;
   justify-content: space-around;
+  transition: all .2s;
   cursor: pointer;
 }
 .settings .single-device:nth-child(odd){
@@ -319,7 +320,7 @@ svg:root{
 
 .settings .single-device .data span.choice{
   display: none;
-  background: #62EEB4;
+  background: #7EBAE5;
   text-align: center;
   color: white;
   padding: 5px;
@@ -331,10 +332,17 @@ svg:root{
   padding: 10px;
   font-weight: bold;
   text-align: center;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.settings .single-device .data span.delete:hover{
+  transform: scale(1.2);
 }
 
 .settings .single-device:hover .data span.choice{
   display: block;
+  transition: all .2s;
 }
 
 #remote{
