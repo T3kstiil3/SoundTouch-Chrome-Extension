@@ -5,14 +5,9 @@
   "description": "This extension will help you to controll SoundTouch with your favorite brower Chrome :)",
   "version": "1.0",
 
-  "options_ui": {
-    "page": "/options/options.html",
-    "chrome_style": true
-  },
-
   "browser_action": {
-   "default_icon": "icon.png",
-   "default_popup": "/widget/popup.html",
+   "default_icon": "img/icon.png",
+   "default_popup": "index.html",
    "default_title": "SoundTouch Chrome Extension"
  },
 

@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SoundTouch Chrome Extenstion</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,400' rel='stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body ng-app="app">
+    <div id="main" ng-class="remote.showSettings ? 'moveUp': ''" ng-controller="RemoteController as remote">
+      <div id="content">
+        <div id="cover" class="cover" style="background:url({{remote.art}})">
+          <div ng-if="remote.timeInfo" class="timeInfo">{{remote.timeInfo}}</div>
+        </div>
+        <div class="progressBarContenair">
+          <div class="progressBar" style="width:{{remote.progressBar}}%;"></div>
+        </div>
+
+        <span id="track">{{remote.track}}</span>
+        <span id="album">{{remote.album}}</span>
+        <span id="artist">{{remote.artist}}</span>
+      </div>
+
+      <div class="trackControl">
+        <i class="fa fa-stop buttonRemote" ng-mouseup="remote.pushUpButton('STOP')"></i>
+        <i class="fa fa-backward buttonRemote" ng-mouseup="remote.pushUpButton('PREV_TRACK')"></i>
+        <i class="fa fa-play buttonRemote" ng-mouseup="remote.pushUpButton('PLAY_PAUSE')"></i>
+        <i class="fa fa-forward buttonRemote" ng-mouseup="remote.pushUpButton('NEXT_TRACK')"></i>
+        <i class="fa {{remote.ratingClass}} buttonRemote" ng-mouseup="remote.pushUpButton('FAVORITE')"></i>
+      </div>
+
+      <div class="volumeControl">
+        <i class="fa fa-volume-down buttonRemote" ng-mouseup="remote.pushUpButton('VOLUME_DOWN')" ng-mousedown="remote.pushDownButton('VOLUME_DOWN')"></i>
+        <div class="volumeBarContenair">
+          <div class="volumeBar" style="width:{{remote.volumeBar}}%;"></div>
+        </div>
+        <i class="fa fa-volume-up buttonRemote" ng-mouseup="remote.pushUpButton('VOLUME_UP')" ng-mousedown="remote.pushDownButton('VOLUME_UP')"></i>
+      </div>
+
+      <div class="footerPopup">
+        <i class="fa fa-list-ul" ng-if="!remote.showSettings"></i>
+        <i class="fa fa-cog cog-left" ng-if="remote.showSettings"></i>
+        <span ng-if="!remote.showSettings">{{remote.source}}</span>
+        <span ng-if="remote.showSettings">Settings</span>
+        <i class="fa" ng-class="remote.showSettings ? 'fa-times': 'fa-cog'" ng-click="remote.toggleSettings()"></i>
+      </div>
+
+    </div>
+
+    <div ng-controller="SettingsController as settings" class="settings">
+
+      <ul class="currentDevice" ng-if="settings.currentDevice">
+        <li class="single-device">
+          <div class="data">
+            <span>{{settings.currentDevice.name}}</span>
+            <span>{{settings.currentDevice.type}}</span>
+            <span>{{settings.currentDevice.ipAddress}}</span>
+            <span class="delete" ng-click="settings.reset()">Delete</span>
+          </div>
+          <svg width="67" height="97" xmlns="http://www.w3.org/2000/svg">
+           <g>
+            <rect fill="none" id="canvas_background" height="99" width="69" y="-1" x="-1"/>
+           </g>
+           <g>
+            <g id="svg_1">
+             <path id="svg_2" d="m22.077966,42.855207c4.531,0 8.198,-3.671 8.198,-8.199c0,-4.529 -3.667,-8.2 -8.198,-8.2c-4.527,0 -8.2,3.671 -8.2,8.2c0,4.527 3.673,8.199 8.2,8.199zm-0.002,-11.951c2.072,0 3.752,1.679 3.752,3.751c0,2.071 -1.68,3.75 -3.752,3.75c-2.07,0 -3.75,-1.679 -3.75,-3.75c0,-2.072 1.68,-3.751 3.75,-3.751zm7.488,-3.949c3.862,0 7.004,-3.141 7.004,-7c0,-3.86 -3.142,-7.001 -7.004,-7.001c-3.86,0 -7.001,3.141 -7.001,7.001c0,3.86 3.141,7 7.001,7zm0.002,-11.771c2.636,0 4.772,2.137 4.772,4.771c0,2.633 -2.137,4.771 -4.772,4.771s-4.771,-2.137 -4.771,-4.771c0,-2.635 2.135,-4.771 4.771,-4.771zm12.497,4.27l0,-2.732c0,-0.648 0.525,-1.173 1.173,-1.173l6.464,0c0.648,0 1.173,0.525 1.173,1.173l0,2.732l-8.81,0zm0,18.433l0,-2.732l8.811,0l0,2.732c0,0.648 -0.525,1.173 -1.173,1.173l-6.464,0c-0.649,0 -1.174,-0.525 -1.174,-1.173zm0,-17.433l8.811,0l0,2.732c0,0.648 -0.525,1.173 -1.173,1.173l-6.464,0c-0.648,0 -1.173,-0.525 -1.173,-1.173l0,-2.732l-0.001,0zm8.81,10.969l0,2.731l-8.811,0l0,-2.731c0,-0.648 0.525,-1.173 1.173,-1.173l6.464,0c0.649,0 1.174,0.525 1.174,1.173zm-17.804,48.52c9.057,0 16.424,-7.368 16.424,-16.424s-7.367,-16.422 -16.424,-16.422s-16.424,7.367 -16.424,16.423s7.367,16.423 16.424,16.423zm0,-29.846c7.402,0 13.424,6.021 13.424,13.423c0,7.402 -6.022,13.424 -13.424,13.424s-13.424,-6.021 -13.424,-13.424c0,-7.402 6.022,-13.423 13.424,-13.423zm0,33.662c11.16,0 20.239,-9.079 20.239,-20.239c0,-11.159 -9.079,-20.237 -20.239,-20.237s-20.239,9.078 -20.239,20.237c0,11.16 9.079,20.239 20.239,20.239zm0,-37.477c9.505,0 17.239,7.732 17.239,17.237c0,9.506 -7.733,17.239 -17.239,17.239s-17.239,-7.733 -17.239,-17.239c0,-9.504 7.734,-17.237 17.239,-17.237zm0,24.011c3.741,0 6.77,-3.033 6.77,-6.773c0,-3.739 -3.029,-6.771 -6.77,-6.771c-3.739,0 -6.772,3.032 -6.772,6.771c0,3.74 3.033,6.773 6.772,6.773zm3.246,-11.57c0.856,0 1.551,0.694 1.551,1.55c0,0.854 -0.695,1.549 -1.551,1.549c-0.855,0 -1.549,-0.694 -1.549,-1.549c0,-0.856 0.694,-1.55 1.549,-1.55zm21.145,-53.137l-48.782,0c-1.657,0 -3,1.343 -3,3l0,80c0,1.657 1.343,3 3,3l48.781,0c1.657,0 3,-1.343 3,-3l0,-80c0.001,-1.657 -1.343,-3 -2.999,-3zm-3,80l-42.782,0l0,-74l42.781,0l0,74l0.001,0z"/>
+            </g>
+           </g>
+          </svg>
+        </li>
+      </ul>
+
+      <button ng-if='!settings.name && !settings.scanProgress' ng-click="settings.scanNetwork()">
+        <i class="fa fa-wifi"></i>
+        Scan
+      </button>
+
+      <i id="loader" ng-if='settings.scanProgress' class="fa fa-circle-o-notch fa-spin"></i>
+
+      <div class="noDevice" ng-if="settings.noDevice">
+        No SoundTouch Find
+      </div>
+
+
+      <div class="noDevice" ng-if="settings.devices.length">
+        {{settings.devices.length}} SoundTouch Find
+      </div>
+
+      <ul ng-if="settings.devices.length">
+        <li class="single-device" ng-repeat="device in settings.devices" ng-click="settings.selectDevice(device,$index)">
+          <div class="data">
+            <span>{{device.name}}</span>
+            <span>{{device.type}}</span>
+            <span>{{device.ipAddress}}</span>
+            <span class="choice">Choice</span>
+          </div>
+          <svg width="67" height="97" xmlns="http://www.w3.org/2000/svg">
+           <g>
+            <rect fill="none" id="canvas_background" height="99" width="69" y="-1" x="-1"/>
+           </g>
+           <g>
+            <g id="svg_1">
+             <path id="svg_2" d="m22.077966,42.855207c4.531,0 8.198,-3.671 8.198,-8.199c0,-4.529 -3.667,-8.2 -8.198,-8.2c-4.527,0 -8.2,3.671 -8.2,8.2c0,4.527 3.673,8.199 8.2,8.199zm-0.002,-11.951c2.072,0 3.752,1.679 3.752,3.751c0,2.071 -1.68,3.75 -3.752,3.75c-2.07,0 -3.75,-1.679 -3.75,-3.75c0,-2.072 1.68,-3.751 3.75,-3.751zm7.488,-3.949c3.862,0 7.004,-3.141 7.004,-7c0,-3.86 -3.142,-7.001 -7.004,-7.001c-3.86,0 -7.001,3.141 -7.001,7.001c0,3.86 3.141,7 7.001,7zm0.002,-11.771c2.636,0 4.772,2.137 4.772,4.771c0,2.633 -2.137,4.771 -4.772,4.771s-4.771,-2.137 -4.771,-4.771c0,-2.635 2.135,-4.771 4.771,-4.771zm12.497,4.27l0,-2.732c0,-0.648 0.525,-1.173 1.173,-1.173l6.464,0c0.648,0 1.173,0.525 1.173,1.173l0,2.732l-8.81,0zm0,18.433l0,-2.732l8.811,0l0,2.732c0,0.648 -0.525,1.173 -1.173,1.173l-6.464,0c-0.649,0 -1.174,-0.525 -1.174,-1.173zm0,-17.433l8.811,0l0,2.732c0,0.648 -0.525,1.173 -1.173,1.173l-6.464,0c-0.648,0 -1.173,-0.525 -1.173,-1.173l0,-2.732l-0.001,0zm8.81,10.969l0,2.731l-8.811,0l0,-2.731c0,-0.648 0.525,-1.173 1.173,-1.173l6.464,0c0.649,0 1.174,0.525 1.174,1.173zm-17.804,48.52c9.057,0 16.424,-7.368 16.424,-16.424s-7.367,-16.422 -16.424,-16.422s-16.424,7.367 -16.424,16.423s7.367,16.423 16.424,16.423zm0,-29.846c7.402,0 13.424,6.021 13.424,13.423c0,7.402 -6.022,13.424 -13.424,13.424s-13.424,-6.021 -13.424,-13.424c0,-7.402 6.022,-13.423 13.424,-13.423zm0,33.662c11.16,0 20.239,-9.079 20.239,-20.239c0,-11.159 -9.079,-20.237 -20.239,-20.237s-20.239,9.078 -20.239,20.237c0,11.16 9.079,20.239 20.239,20.239zm0,-37.477c9.505,0 17.239,7.732 17.239,17.237c0,9.506 -7.733,17.239 -17.239,17.239s-17.239,-7.733 -17.239,-17.239c0,-9.504 7.734,-17.237 17.239,-17.237zm0,24.011c3.741,0 6.77,-3.033 6.77,-6.773c0,-3.739 -3.029,-6.771 -6.77,-6.771c-3.739,0 -6.772,3.032 -6.772,6.771c0,3.74 3.033,6.773 6.772,6.773zm3.246,-11.57c0.856,0 1.551,0.694 1.551,1.55c0,0.854 -0.695,1.549 -1.551,1.549c-0.855,0 -1.549,-0.694 -1.549,-1.549c0,-0.856 0.694,-1.55 1.549,-1.55zm21.145,-53.137l-48.782,0c-1.657,0 -3,1.343 -3,3l0,80c0,1.657 1.343,3 3,3l48.781,0c1.657,0 3,-1.343 3,-3l0,-80c0.001,-1.657 -1.343,-3 -2.999,-3zm-3,80l-42.782,0l0,-74l42.781,0l0,74l0.001,0z"/>
+            </g>
+           </g>
+          </svg>
+        </li>
+      </ul>
+
+      <h3 ng-if="vm.devices && vm.devices.length == 0 && !settings.scanProgress">No device found <i class="fa fa-frown-o"></i></h3>
+
+    </div>
+    <div id="noSettings" ng-if="0">
+      <button class="buttonRemote" type="button" name="button" value="POWER"><i class="fa fa-power-off"></i></button>
+      <span id="loaderSettings">Loading Settings</span>
+      <span id="loaderInformations" style="display:none;">Loading Track Informations</span>
+      <span id="setSettingsMessage" style="display:none;">Missing or Bad settings</span>
+      <i id="loader" class="fa fa-circle-o-notch fa-spin"></i>
+      <button id="settings_btn2" style="display:none;"><i class="fa fa-cog"></i> Set settings</button>
+    </div>
+
+    <!-- Include JS -->
+    <script src="js/angular.min.js"></script>
+    <script src="app/app.controller.js"></script>
+    <script src="app/settings.service.js"></script>
+  </body>
+</html>

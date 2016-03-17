@@ -1,15 +1,30 @@
 angular
-  .module('app', []);
+  .module('app', [])
+  .config( [
+      '$compileProvider',
+      function( $compileProvider ) {
+          var currentImgSrcSanitizationWhitelist = $compileProvider.imgSrcSanitizationWhitelist();
+          var newImgSrcSanitizationWhiteList = currentImgSrcSanitizationWhitelist.toString().slice(0,-1)
+          + '|chrome-extension:'
+          +currentImgSrcSanitizationWhitelist.toString().slice(-1);
+
+          console.log("Changing imgSrcSanitizationWhiteList from "+currentImgSrcSanitizationWhitelist+" to "+newImgSrcSanitizationWhiteList);
+          $compileProvider.imgSrcSanitizationWhitelist(newImgSrcSanitizationWhiteList);
+      }
+  ]);
 
 angular
   .module('app')
   .controller('SettingsController',SettingsController)
   .controller('RemoteController', RemoteController);
 
-function RemoteController($scope,$http) {
+function RemoteController($scope,$http,settingsService) {
 
   var vm = this;
   vm.showSettings = false;
+  vm.track = "";
+  vm.album = "";
+  vm.artist = "";
 
   vm.pushUpButton = pushUpButton;
   vm.pushDownButton = pushDownButton;
@@ -35,13 +50,12 @@ function RemoteController($scope,$http) {
   var loader = document.getElementById("loader");
   var main = document.getElementById("main");
 
-  chrome.storage.sync.get({
-    ip: '...'
-  }, function(items) {
-    settings = items;
+
+  settingsService.getDevice(function(data){
+    vm.device = data.device;
+    console.log(vm.device);
     getNowPlaying();
   });
-
 
   //getSources
   //:8090/sources
@@ -49,14 +63,13 @@ function RemoteController($scope,$http) {
   //getVolume
   //:8090/volume
   function getVolume(){
-    var url = 'http://'+settings.ip+':8090/volume';
+    var url = 'http://'+vm.device.ipAddress+':8090/volume';
     $http.get(url, {}).then(function(response) {
       if (window.DOMParser)
       {
         parser = new DOMParser();
         var xmlDoc = parser.parseFromString(response.data,"text/xml");
         volume = xmlDoc.getElementsByTagName("targetvolume")[0].childNodes[0].nodeValue;
-        console.log(volume);
         vm.volumeBar = volume;
       }
     });
@@ -68,55 +81,47 @@ function RemoteController($scope,$http) {
     //loaderSettings.style.display = 'none';
     //loaderInformations.style.display = 'block';
 
-    var url = 'http://'+settings.ip+':8090/now_playing';
-    xhr.open("GET", url, true);
-    xhr.onreadystatechange = function() {
+    var url = 'http://'+vm.device.ipAddress+':8090/now_playing';
+    $http.get(url, {}).then(function(response) {
+      if (window.DOMParser)
+      {
+        parser=new DOMParser();
+        var xmlDoc = parser.parseFromString(response.data,"text/xml");
+        if(xmlDoc.getElementsByTagName("track")[0]){
 
-      if (xhr.readyState == 4 && xhr.responseText != "") {
-        if (window.DOMParser)
-        {
-          parser=new DOMParser();
-          var xmlDoc = parser.parseFromString(xhr.responseText,"text/xml");
-          if(xmlDoc.getElementsByTagName("track")[0]){
-            $scope.$apply(function(){
-              vm.track = xmlDoc.getElementsByTagName("track")[0].childNodes[0].nodeValue;
-              vm.artist  = xmlDoc.getElementsByTagName("artist")[0].childNodes[0].nodeValue;
-              vm.album = xmlDoc.getElementsByTagName("album")[0].childNodes[0].nodeValue;
-              vm.art = xmlDoc.getElementsByTagName("art")[0].childNodes[0].nodeValue;
-              vm.source = xmlDoc.getElementsByTagName("ContentItem")[0].getAttribute("source");
-              vm.rating = xmlDoc.getElementsByTagName("rating")[0].childNodes[0].nodeValue;
-              time = xmlDoc.getElementsByTagName("time")[0].childNodes[0].nodeValue;
-              totalTime = xmlDoc.getElementsByTagName("time")[0].getAttribute("total");
+          vm.source = xmlDoc.getElementsByTagName("ContentItem")[0].getAttribute("source");
+          if(vm.source == "BLUETOOTH"){
+            vm.track = xmlDoc.getElementsByTagName("stationName")[0].childNodes[0].nodeValue;
+            vm.art = "img/bluetooth_bg.jpg";
+          }else{
+            vm.track = xmlDoc.getElementsByTagName("track")[0].childNodes[0].nodeValue;
+            vm.artist  = xmlDoc.getElementsByTagName("artist")[0].childNodes[0].nodeValue;
+            vm.album = xmlDoc.getElementsByTagName("album")[0].childNodes[0].nodeValue;
+            vm.art = xmlDoc.getElementsByTagName("art")[0].childNodes[0].nodeValue;
+            vm.rating = xmlDoc.getElementsByTagName("rating")[0].childNodes[0].nodeValue;
+            time = xmlDoc.getElementsByTagName("time")[0].childNodes[0].nodeValue;
+            totalTime = xmlDoc.getElementsByTagName("time")[0].getAttribute("total");
+          }
 
-              console.log(vm.rating);
-              console.log(vm.track);
+          if(vm.rating == 'UP'){
+            vm.ratingClass = "fa-heart";
+          }else{
+            vm.ratingClass = "fa-heart-o";
+          }
 
-              if(vm.rating == 'UP'){
-                vm.ratingClass = "fa-heart";
-              }else{
-                vm.ratingClass = "fa-heart-o";
-              }
-
-              //noSettings.style.display = 'none';
-              //loaderInformations.style.display = 'none';
-              main.style.display = 'block';
-            })
+          //noSettings.style.display = 'none';
+          //loaderInformations.style.display = 'none';
+          main.style.display = 'block';
 
 
+          if(!vm.source == "BLUETOOTH"){
             clearInterval(timer);
             timer = setInterval(function() {Horloge();}, 1000);
-            getVolume();
           }
+          getVolume();
         }
-      }else{
-        //loaderInformations.style.display = 'none';
-        //loaderSettings.style.display = "none";
-        //loader.style.display = "none";
-        //setSettingsMessage.style.display = "block";
-        //settings_btn2.style.display = "block";
       }
-    }
-    xhr.send();
+    });
   }
 
   //Horloge
@@ -149,15 +154,10 @@ function RemoteController($scope,$http) {
   }
 
   function pushUpButton(button){
-    if(button == "FAVORITE"){
-      if(vm.rating == 'UP')
-        button = "REMOVE_FAVORITE";
-      else
-        button = "ADD_FAVORITE";
-    }
-    var url = 'http://10.0.10.166:8090/key';
+    var url = 'http://'+vm.device.ipAddress+':8090/key';
     xhr.open("POST", url, true);
-    xhr.send('<?xml version="1.0" encoding="UTF-8" ?><key state="press" sender="Gabbo">'+button+'</key>');
+    xhr.send('<?xml version="1.0" encoding="UTF-8" ?><key state="release" sender="Gabbo">'+button+'</key>');
+    getVolume();
     setTimeout(function() { getNowPlaying(); }, 500);
   }
 
@@ -168,9 +168,10 @@ function RemoteController($scope,$http) {
       else
         button = "ADD_FAVORITE";
     }
-    var url = 'http://10.0.10.166:8090/key';
+    var url = 'http://'+vm.device.ipAddress+':8090/key';
     xhr.open("POST", url, true);
-    xhr.send('<?xml version="1.0" encoding="UTF-8" ?><key state="release" sender="Gabbo">'+button+'</key>');
+    xhr.send('<?xml version="1.0" encoding="UTF-8" ?><key state="press" sender="Gabbo">'+button+'</key>');
+    getVolume();
     setTimeout(function() { getNowPlaying(); }, 500);
   }
 
@@ -181,24 +182,39 @@ function RemoteController($scope,$http) {
   }
 }
 
-function SettingsController($http){
+function SettingsController($http,settingsService){
   //http://10.0.10.166:8090/info
 
   var vm = this;
   vm.scanProgress = false;
   //Function
   vm.scanNetwork = scanNetwork;
+  vm.selectDevice = selectDevice;
+  vm.reset = reset;
+
+  function reset(){
+    settingsService.setDevice(null);
+    vm.currentDevice = null;
+  }
+  function selectDevice(device,index){
+    settingsService.setDevice(device);
+  }
+
+  settingsService.getDevice(function(data){
+    vm.currentDevice = data.device;
+  });
 
   function scanNetwork(){
     vm.devices = [];
     vm.scanProgress = true;
+    vm.noDevice = false;
     getLocalIPs(function(ips) { // <!-- ips is an array of local IP addresses.
         if(ips[1] && ValidateIPaddress(ips[1])){
           var ip = ips[1];
           ip = ip.split(".");
           for (var i = 0; i < 254; i++) {
             var testIp = ip[0]+"."+ip[1]+"."+ip[2]+"."+i;
-            $http.get("http://"+testIp+":8090/info", {}).then(function(response) {
+            $http.get("http://"+testIp+":8090/info", {}).then(function successCallback(response) {
               if(response.status == 200 && response.data.indexOf('deviceID') > -1 ){
                 parser=new DOMParser();
                 var xmlDoc = parser.parseFromString(response.data,"text/xml");
@@ -206,13 +222,18 @@ function SettingsController($http){
                 device.name = xmlDoc.getElementsByTagName("name")[0].childNodes[0].nodeValue;
                 device.type = xmlDoc.getElementsByTagName("type")[0].childNodes[0].nodeValue;
                 device.ipAddress = xmlDoc.getElementsByTagName("ipAddress")[0].childNodes[0].nodeValue;
-                device.imgUrl = "../img/STouch-10.png";
                 vm.devices.push(device);
                 vm.scanProgress = false;
+                vm.noDevice = false;
               }
-            }).catch(function(error) {
-              console.log("Error : "+error);
+            }, function errorCallback(response) {
+              // called asynchronously if an error occurs
+              // or server returns response with an error status.
             });
+          }
+          if(vm.devices.length == 0){
+            vm.scanProgress = false;
+            vm.noDevice = true;
           }
         }
     });
@@ -256,5 +277,4 @@ function SettingsController($http){
         pc.setLocalDescription(sdp);
     }, function onerror() {});
   }
-
 }

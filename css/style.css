@@ -27,7 +27,7 @@ header #settings_btn{
   font-size: 20px;
   top: 0px;
   padding: 7.5px 20px;
-  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
   cursor: pointer;
 }
 
@@ -52,6 +52,8 @@ header #settings_btn:hover{
   transition: all .2s ;
   height: 100%;
   background-color: white;
+  position: relative;
+  z-index: 10;
 }
 
 #content{
@@ -238,14 +240,24 @@ header #settings_btn:hover{
   cursor: pointer;
 }
 
+.footerPopup .cog-left{
+  background: #FF9A06;
+  color: white;
+}
+
+.footerPopup .cog-left:hover{
+  transform: none;
+  cursor: default;
+}
 
 .settings{
+  transition: all .2s ;
   height: 100%;
   width: 100%;
   position: absolute;
   top: 0px;
   transition: all .2s;
-  z-index: -1;
+  z-index: 1;
   margin-top: 60px;
 }
 
@@ -260,6 +272,70 @@ header #settings_btn:hover{
   font-size: 15px;
 }
 
+.settings .noDevice{
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+}
+
+svg path{
+  fill: #7EBAE5;
+}
+
+svg:root{
+  fill: #7EBAE5;
+}
+
+.settings .currentDevice{
+  margin-bottom: 20px;
+}
+.settings .currentDevice .single-device{
+  cursor: default;
+}
+
+.settings ul{
+  margin: 0;
+  padding: 0;
+}
+
+.settings .single-device{
+  display: flex;
+  list-style: none;
+  padding: 10px;
+  justify-content: space-around;
+  cursor: pointer;
+}
+.settings .single-device:nth-child(odd){
+  background: #F0E9E9;
+}
+.settings .single-device:hover{
+  background: #DDD0D0;
+}
+
+.settings .single-device .data span{
+  display: block;
+  margin: 6px 0;
+}
+
+.settings .single-device .data span.choice{
+  display: none;
+  background: #62EEB4;
+  text-align: center;
+  color: white;
+  padding: 5px;
+  font-weight: bold;
+}
+.settings .single-device .data span.delete{
+  color: #FFF;
+  background: #DD7070;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.settings .single-device:hover .data span.choice{
+  display: block;
+}
 
 #remote{
   background: #ADAEAD;
