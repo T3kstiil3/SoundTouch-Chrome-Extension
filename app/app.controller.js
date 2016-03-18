@@ -44,8 +44,6 @@ function RemoteController($scope,$http,settingsService) {
   vm.openSettingsPage = openSettingsPage;
   vm.toggleSettings = toggleSettings;
 
-  //https://dribbble.com/shots/2282786-Bop-Web-Player/attachments/431768
-
   var xhr = new XMLHttpRequest();
   var settings;
   var volume;
@@ -65,7 +63,6 @@ function RemoteController($scope,$http,settingsService) {
 
   settingsService.getDevice(function(data){
     vm.device = data.device;
-    console.log(vm.device);
     if(vm.device){
       getNowPlaying();
     }else{
@@ -75,6 +72,7 @@ function RemoteController($scope,$http,settingsService) {
 
   //getSources
   //:8090/sources
+  //TODO
 
   //getVolume
   //:8090/volume
@@ -106,6 +104,15 @@ function RemoteController($scope,$http,settingsService) {
         if(xmlDoc.getElementsByTagName("track")[0]){
 
           vm.source = xmlDoc.getElementsByTagName("ContentItem")[0].getAttribute("source");
+          var playStatus = xmlDoc.getElementsByTagName("playStatus")[0].childNodes[0].nodeValue;
+
+          if(playStatus == "PAUSE_STATE"){
+            //ico play
+            vm.playStatus = 'fa-play';
+          }else if(playStatus == "PLAY_STATE"){
+            //ico pause
+            vm.playStatus = 'fa-pause';
+          }
 
           if(vm.source == "BLUETOOTH"){
             vm.track = xmlDoc.getElementsByTagName("stationName")[0].childNodes[0].nodeValue;
@@ -140,7 +147,9 @@ function RemoteController($scope,$http,settingsService) {
 
   //Horloge
   function Horloge() {
-    time++;
+    if(vm.playStatus == "fa-pause"){
+      time++;
+    }
     var minutes = (time - Math.floor(time / 60) * 60); if(minutes < 10){minutes = "0"+minutes}
     var minutesTotal = (totalTime - Math.floor(totalTime / 60) * 60); if(minutesTotal < 10){minutesTotal = "0"+minutesTotal}
     var divTimeMessage = Math.floor(time / 60)+":"+minutes+" / "+Math.floor(totalTime / 60)+":"+minutesTotal;
@@ -168,6 +177,9 @@ function RemoteController($scope,$http,settingsService) {
   }
 
   function pushUpButton(button){
+    if(!vm.device)
+      return;
+
     if(button == "FAVORITE"){
       if(vm.rating == 'UP')
         button = "REMOVE_FAVORITE";
@@ -175,13 +187,24 @@ function RemoteController($scope,$http,settingsService) {
         button = "ADD_FAVORITE";
     }
     var url = 'http://'+vm.device.ipAddress+':8090/key';
-    xhr.open("POST", url, true);
-    xhr.send('<?xml version="1.0" encoding="UTF-8" ?><key state="release" sender="Gabbo">'+button+'</key>');
-    getVolume();
-    setTimeout(function() { getNowPlaying(); }, 500);
+    var data = '<?xml version="1.0" encoding="UTF-8" ?><key state="release" sender="Gabbo">'+button+'</key>';
+    $http({
+        method: 'POST',
+        url: url,
+        data: data,
+        headers: { "Content-Type": 'application/xml' }
+    }).then(function(){
+      getVolume();
+      setTimeout(function() { getNowPlaying(); }, 500);
+      //Analytics send pushed button
+      _gaq.push(['_trackEvent', button, 'clicked']);
+    });
   }
 
   function pushDownButton(button){
+    if(!vm.device)
+      return;
+
     if(button == "FAVORITE"){
       if(vm.rating == 'UP')
         button = "REMOVE_FAVORITE";
@@ -189,19 +212,31 @@ function RemoteController($scope,$http,settingsService) {
         button = "ADD_FAVORITE";
     }
     var url = 'http://'+vm.device.ipAddress+':8090/key';
-    xhr.open("POST", url, true);
-    xhr.send('<?xml version="1.0" encoding="UTF-8" ?><key state="press" sender="Gabbo">'+button+'</key>');
-    getVolume();
-    setTimeout(function() { getNowPlaying(); }, 500);
-    //Analytics send pushed button
-    _gaq.push(['_trackEvent', button, 'clicked']);
+    var data = '<?xml version="1.0" encoding="UTF-8" ?><key state="press" sender="Gabbo">'+button+'</key>';
+    $http({
+        method: 'POST',
+        url: url,
+        data: data,
+        headers: { "Content-Type": 'application/xml' }
+    }).then(function(){
+      getVolume();
+      setTimeout(function() { getNowPlaying(); }, 500);
+      //Analytics send pushed button
+      _gaq.push(['_trackEvent', button, 'clicked']);
+    });
   }
 
   function toggleSettings(){
-    vm.showSettings = !vm.showSettings;
-    //Send order to SettingsController
-
+    settingsService.getDevice(function(data){
+      vm.device = data.device;
+      if(!vm.device){
+        vm.showSettings = true;
+      }else{
+        vm.showSettings = !vm.showSettings;
+      }
+    });
   }
+
 }
 
 function SettingsController($http,settingsService){

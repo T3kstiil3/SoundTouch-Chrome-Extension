@@ -179,7 +179,7 @@ header #settings_btn:hover{
   justify-content: center;
   color:#5A6F81;
 }
-.trackControl .fa-play{
+.trackControl .fa-playStatus{
   border: 2px solid #D1D8DD;
   border-radius: 50%;
   padding: 25px 29px;
@@ -189,6 +189,10 @@ header #settings_btn:hover{
   text-align: center;
   margin: 0px 10px;
 }
+.trackControl .fa-playStatus.fa-pause{
+  padding-right: 33px;
+}
+
 .trackControl .fa-forward,.trackControl .fa-backward{
   border: 2px solid #D1D8DD;
   border-radius: 50%;
