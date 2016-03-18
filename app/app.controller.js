@@ -11,9 +11,6 @@ angular
           +currentImgSrcSanitizationWhitelist.toString().slice(-1);
           console.log("Changing imgSrcSanitizationWhiteList from "+currentImgSrcSanitizationWhitelist+" to "+newImgSrcSanitizationWhiteList);
           $compileProvider.imgSrcSanitizationWhitelist(newImgSrcSanitizationWhiteList);
-
-          //Error Log
-          $logProvider.debugEnabled(false);
       }
   ]);
 
@@ -21,6 +18,17 @@ angular
   .module('app')
   .controller('SettingsController',SettingsController)
   .controller('RemoteController', RemoteController);
+
+
+/*ANALYTICS INTEGRATION*/
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-75287631-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
 
 function RemoteController($scope,$http,settingsService) {
 
@@ -181,6 +189,8 @@ function RemoteController($scope,$http,settingsService) {
     xhr.send('<?xml version="1.0" encoding="UTF-8" ?><key state="press" sender="Gabbo">'+button+'</key>');
     getVolume();
     setTimeout(function() { getNowPlaying(); }, 500);
+    //Analytics send pushed button
+    _gaq.push(['_trackEvent', button, 'clicked']);
   }
 
   function toggleSettings(){
@@ -213,6 +223,8 @@ function SettingsController($http,settingsService){
   });
 
   function scanNetwork(){
+    //Analytics send pushed button
+    _gaq.push(['_trackEvent', "Scan Network Button", 'clicked']);
     vm.devices = [];
     vm.scanProgress = true;
     vm.noDevice = false;
