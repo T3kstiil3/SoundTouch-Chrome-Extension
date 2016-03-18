@@ -66,7 +66,11 @@ function RemoteController($scope,$http,settingsService) {
   settingsService.getDevice(function(data){
     vm.device = data.device;
     console.log(vm.device);
-    getNowPlaying();
+    if(vm.device){
+      getNowPlaying();
+    }else{
+      toggleSettings();
+    }
   });
 
   //getSources
@@ -90,8 +94,8 @@ function RemoteController($scope,$http,settingsService) {
   //Now Playing display
   function getNowPlaying(){
 
-    //loaderSettings.style.display = 'none';
-    //loaderInformations.style.display = 'block';
+    if(!vm.device)
+      return;
 
     var url = 'http://'+vm.device.ipAddress+':8090/now_playing';
     $http.get(url, {}).then(function(response) {
