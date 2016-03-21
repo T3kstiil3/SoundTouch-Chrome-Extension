@@ -150,6 +150,9 @@ function RemoteController($scope,$http,settingsService) {
     if(vm.playStatus == "fa-pause"){
       time++;
     }
+    if(time % 10 == 0){
+      getNowPlaying();
+    }
     var minutes = (time - Math.floor(time / 60) * 60); if(minutes < 10){minutes = "0"+minutes}
     var minutesTotal = (totalTime - Math.floor(totalTime / 60) * 60); if(minutesTotal < 10){minutesTotal = "0"+minutesTotal}
     var divTimeMessage = Math.floor(time / 60)+":"+minutes+" / "+Math.floor(totalTime / 60)+":"+minutesTotal;
@@ -267,8 +270,8 @@ function SettingsController($http,settingsService){
     vm.devices = [];
     vm.scanProgress = true;
     vm.noDevice = false;
-    getLocalIPs(function(ips) { // <!-- ips is an array of local IP addresses.
-        if(ips[1] && ValidateIPaddress(ips[1])){
+    getLocalIPs(function(ips) {
+        if(ips[0] && ValidateIPaddress(ips[0])){
           var ip = ips[1];
           ip = ip.split(".");
           for (var i = 0; i < 254; i++) {
@@ -300,40 +303,24 @@ function SettingsController($http,settingsService){
 
   function ValidateIPaddress(ipaddress)
   {
-   if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/)
-    {
-      return (true)
+    if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/){
+      return (true);
     }
-    return (false)
+    return (false);
   }
 
   function getLocalIPs(callback) {
     var ips = [];
-
-    var RTCPeerConnection = window.RTCPeerConnection ||
-        window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
-
-    var pc = new RTCPeerConnection({
-        // Don't specify any stun/turn servers, otherwise you will
-        // also find your public IP addresses.
-        iceServers: []
-    });
-    // Add a media line, this is needed to activate candidate gathering.
-    pc.createDataChannel('');
-
-    // onicecandidate is triggered whenever a candidate has been found.
-    pc.onicecandidate = function(e) {
-        if (!e.candidate) { // Candidate gathering completed.
-            pc.close();
-            callback(ips);
-            return;
-        }
-        var ip = /^candidate:.+ (\S+) \d+ typ/.exec(e.candidate.candidate)[1];
-        if (ips.indexOf(ip) == -1) // avoid duplicate entries (tcp/udp)
-            ips.push(ip);
+    window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;   //compatibility for firefox and chrome
+    var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};
+    pc.createDataChannel("");    //create a bogus data channel
+    pc.createOffer(pc.setLocalDescription.bind(pc), noop);    // create offer and set local description
+    pc.onicecandidate = function(ice){  //listen for candidate events
+        if(!ice || !ice.candidate || !ice.candidate.candidate)  return;
+        var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+        ips.push(myIP);
+        callback(ips);
+        pc.onicecandidate = noop;
     };
-    pc.createOffer(function(sdp) {
-        pc.setLocalDescription(sdp);
-    }, function onerror() {});
   }
 }
