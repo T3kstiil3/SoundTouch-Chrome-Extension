@@ -12,8 +12,8 @@ function settingsService() {
         });
     }
     this.setDevice = function(data) {
-        chrome.storage.sync.set({device: data}, function() {
-            console.log('Data is stored in Chrome storage');
-        });
+      chrome.storage.sync.set({device: data}, function() {
+        console.log('Data is stored in Chrome storage');
+      });
     }
 };

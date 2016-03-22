@@ -43,8 +43,8 @@ function RemoteController($scope,$http,settingsService) {
   vm.getNowPlaying = getNowPlaying;
   vm.openSettingsPage = openSettingsPage;
   vm.toggleSettings = toggleSettings;
+  vm.toggleSources = toggleSources;
 
-  var xhr = new XMLHttpRequest();
   var settings;
   var volume;
   var timer;
@@ -60,23 +60,70 @@ function RemoteController($scope,$http,settingsService) {
   var loader = document.getElementById("loader");
   var main = document.getElementById("main");
 
+  //Set default data to bind;
+  defaultData();
 
   settingsService.getDevice(function(data){
     vm.device = data.device;
     if(vm.device){
       getNowPlaying();
-    }else{
-      toggleSettings();
+      getSources();
     }
   });
+
+  function defaultData(){
+    clearInterval(timer);
+    vm.art = "img/img_loader.gif";
+    vm.track = "No SoundTouch Selected";
+    vm.artist = "Go to Settings !";
+    vm.album = "";
+    vm.ratingClass = "fa-heart-o";
+    vm.playStatus = 'fa-play';
+    vm.timeInfo = false;
+    vm.progressBar = false;
+  }
+
 
   //getSources
   //:8090/sources
   //TODO
+  function getSources(){
+
+    if(!vm.device){
+      defaultData();
+      return;
+    }
+
+    var url = 'http://'+vm.device.ipAddress+':8090/sources';
+    $http.get(url, {}).then(function(response) {
+      if (window.DOMParser)
+      {
+        parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(response.data,"text/xml");
+        var sources = xmlDoc.getElementsByTagName("sourceItem");
+
+        vm.sources = [];
+        for (var i = 0; i < sources.length; i++) {
+          var source = {};
+          source.source = sources[i].getAttribute("source");
+          source.status = sources[i].getAttribute("status");
+          source.sourceAccount = sources[i].getAttribute("sourceAccount");
+          source.isLocal = sources[i].getAttribute("isLocal");
+          vm.sources.push(source);
+        }
+      }
+    });
+  }
 
   //getVolume
   //:8090/volume
   function getVolume(){
+
+    if(!vm.device){
+      defaultData();
+      return;
+    }
+
     var url = 'http://'+vm.device.ipAddress+':8090/volume';
     $http.get(url, {}).then(function(response) {
       if (window.DOMParser)
@@ -92,8 +139,14 @@ function RemoteController($scope,$http,settingsService) {
   //Now Playing display
   function getNowPlaying(){
 
-    if(!vm.device)
+    settingsService.getDevice(function(data){
+      vm.device = data.device;
+    });
+
+    if(!vm.device){
+      defaultData();
       return;
+    }
 
     var url = 'http://'+vm.device.ipAddress+':8090/now_playing';
     $http.get(url, {}).then(function(response) {
@@ -102,6 +155,8 @@ function RemoteController($scope,$http,settingsService) {
         parser=new DOMParser();
         var xmlDoc = parser.parseFromString(response.data,"text/xml");
         if(xmlDoc.getElementsByTagName("track")[0]){
+
+          vm.buttonStart = false;
 
           vm.source = xmlDoc.getElementsByTagName("ContentItem")[0].getAttribute("source");
           var playStatus = xmlDoc.getElementsByTagName("playStatus")[0].childNodes[0].nodeValue;
@@ -140,6 +195,12 @@ function RemoteController($scope,$http,settingsService) {
             timer = setInterval(function() {Horloge();}, 1000);
           }
 
+        }else{
+          if(xmlDoc.getElementsByTagName("ContentItem")[0].getAttribute("source") == 'STANDBY'){
+            vm.track = "SoundTouch on Stanby";
+            vm.artist = "";
+            vm.buttonStart = true;
+          }
         }
       }
     });
@@ -230,16 +291,24 @@ function RemoteController($scope,$http,settingsService) {
   }
 
   function toggleSettings(){
+    vm.showSettings = !vm.showSettings;
     settingsService.getDevice(function(data){
       vm.device = data.device;
-      if(!vm.device){
-        vm.showSettings = true;
-      }else{
-        vm.showSettings = !vm.showSettings;
-      }
+      getNowPlaying();
     });
   }
 
+  function toggleSources(){
+
+    if(!vm.device)
+      return;
+
+    if(vm.showSources == "showSources"){
+      vm.showSources = "";
+    }else{
+      vm.showSources = "showSources";
+    }
+  }
 }
 
 function SettingsController($http,settingsService){
@@ -256,8 +325,11 @@ function SettingsController($http,settingsService){
     settingsService.setDevice(null);
     vm.currentDevice = null;
   }
+
   function selectDevice(device,index){
     settingsService.setDevice(device);
+    vm.currentDevice = device;
+    vm.devices.splice(index,1);
   }
 
   settingsService.getDevice(function(data){

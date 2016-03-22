@@ -144,6 +144,20 @@ header #settings_btn:hover{
   font-size: 16px;
 }
 
+.stanby{
+  border: 3px solid;
+  font-size: 26px;
+  color: #FF9A06;
+  padding: 0px 20px;
+  transition: all .2s ;
+}
+
+.stanby:hover{
+  border: 3px solid #FF9A06;
+  background: #FF9A06;
+  color: #FFF;
+  transform: scale(1.1);
+}
 .buttonRemote{
   cursor: pointer;
 }
@@ -154,6 +168,12 @@ header #settings_btn:hover{
   margin-top: 5px;
   font-size: 28px;
   justify-content: center;
+  transition: all .2s;
+}
+
+.volumeControl.showSources{
+  transition: all .2s;
+  transform: translateX(100%);
 }
 
 .volumeControl .volumeBarContenair{
@@ -178,6 +198,12 @@ header #settings_btn:hover{
   align-items: center;
   justify-content: center;
   color:#5A6F81;
+  transition: all .2s;
+}
+
+.trackControl.showSources{
+  transition: all .2s;
+  transform: translateX(100%);
 }
 .trackControl .fa-playStatus{
   border: 2px solid #D1D8DD;
@@ -215,9 +241,74 @@ header #settings_btn:hover{
   margin-left: 20px;
 }
 
-
 .trackControl .fa-heart{
   color: #EE0760;
+}
+
+.sourceControl{
+  list-style: none;
+  background: #FF9929;
+  color: white;
+  list-style: none;
+  text-align: center;
+  font-size: 16px;
+  position: absolute;
+  width: 100%;
+  bottom: 50px;
+  transform: translateX(-100%);
+  transition: all .2s;
+  padding-top: 8px;
+}
+
+.sourceControl.showSources{
+  transform: translateX(0px);
+}
+
+.sourceControl ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  transition: all .2s;
+  height: 125px;
+  display: flex;
+  flex-direction:column;
+  justify-content:space-around;
+}
+.sourceControl li{
+  transition: all .2s;
+  cursor:pointer;
+}
+
+.sourceControl li:hover{
+  color: #394A5A;
+  font-size: 20px;
+  padding: 4px;
+  font-weight: bold;
+}
+
+.sourceControl li.selected{
+  color: #394A5A;
+  font-size: 20px;
+  padding: 4px;
+}
+
+.sourceControl .buttonList{
+  display: flex;
+  justify-content: space-around;
+}
+
+.sourceControl .buttonList span{
+  display: block;
+  width: 100%;
+  padding: 15px 0px;
+  background: #394A5A;
+  cursor:pointer;
+  transition: all .2s;
+}
+
+.sourceControl .buttonList span:hover{
+  background: #26313C;
+  font-weight: bold;
 }
 
 .footerPopup{
@@ -293,6 +384,13 @@ svg:root{
 .settings .currentDevice{
   margin-bottom: 20px;
 }
+.settings .currentDevice .title{
+    background: grey;
+    padding: 12px 20px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
 .settings .currentDevice .single-device{
   cursor: default;
 }
@@ -314,7 +412,7 @@ svg:root{
   background: #F0E9E9;
 }
 .settings .single-device:hover{
-  background: #DDD0D0;
+  background: #F4F1F1;
 }
 
 .settings .single-device .data span{
@@ -347,6 +445,15 @@ svg:root{
 .settings .single-device:hover .data span.choice{
   display: block;
   transition: all .2s;
+}
+
+.settings .contact{
+  position: absolute;
+  bottom: 66px;
+  height: 20px;
+  margin-top: -20px;
+  z-index: 99;
+  right: 20px;
 }
 
 #remote{

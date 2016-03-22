@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>SoundTouch Chrome Extenstion</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,400' rel='stylesheet' type='text/css'>
@@ -9,20 +10,24 @@
   </head>
   <body ng-app="app">
     <div id="main" ng-class="remote.showSettings ? 'moveUp': ''" ng-controller="RemoteController as remote">
+
       <div id="content">
-        <div id="cover" class="cover" style="background:url({{remote.art}})">
+        <div id="cover" class="cover" style="background:url({{remote.art}});background-repeat: no-repeat;">
           <div ng-if="remote.timeInfo" class="timeInfo">{{remote.timeInfo}}</div>
         </div>
-        <div class="progressBarContenair">
+        <div ng-if="remote.progressBar" class="progressBarContenair">
           <div class="progressBar" style="width:{{remote.progressBar}}%;"></div>
         </div>
 
         <span id="track">{{remote.track}}</span>
         <span id="album">{{remote.album}}</span>
         <span id="artist">{{remote.artist}}</span>
+
+        <span class="stanby" ng-if="remote.buttonStart" ng-mousedown="remote.pushDownButton('POWER')"><i class="fa fa-power-off"></i></span>
+
       </div>
 
-      <div class="trackControl">
+      <div class="trackControl {{remote.showSources}}">
         <i class="fa fa-stop buttonRemote" ng-mousedown="remote.pushDownButton('STOP')"></i>
         <i class="fa fa-backward buttonRemote" ng-mousedown="remote.pushDownButton('PREV_TRACK')"></i>
         <i class="fa {{remote.playStatus}} fa-playStatus buttonRemote" ng-mousedown="remote.pushDownButton('PLAY_PAUSE')"></i>
@@ -30,7 +35,7 @@
         <i class="fa {{remote.ratingClass}} buttonRemote" ng-mousedown="remote.pushDownButton('FAVORITE')"></i>
       </div>
 
-      <div class="volumeControl">
+      <div class="volumeControl {{remote.showSources}}">
         <i class="fa fa-volume-down buttonRemote" ng-mouseup="remote.pushUpButton('VOLUME_DOWN')" ng-mousedown="remote.pushDownButton('VOLUME_DOWN')"></i>
         <div class="volumeBarContenair">
           <div class="volumeBar" style="width:{{remote.volumeBar}}%;"></div>
@@ -38,8 +43,22 @@
         <i class="fa fa-volume-up buttonRemote" ng-mouseup="remote.pushUpButton('VOLUME_UP')" ng-mousedown="remote.pushDownButton('VOLUME_UP')"></i>
       </div>
 
+      <div class="sourceControl {{remote.showSources}}">
+        <ul>
+          <li ng-repeat="source in remote.sources" ng-class="remote.source == source.source ? 'selected' : ''">{{source.source}}</li>
+        </ul>
+        <div class="buttonList">
+          <span>1</span>
+          <span>2</span>
+          <span>3</span>
+          <span>4</span>
+          <span>5</span>
+          <span>6</span>
+        </div>
+      </div>
+
       <div class="footerPopup">
-        <i class="fa fa-list-ul" ng-if="!remote.showSettings"></i>
+        <i class="fa fa-list-ul" ng-if="!remote.showSettings" ng-click='remote.toggleSources()'></i>
         <i class="fa fa-cog cog-left" ng-if="remote.showSettings"></i>
         <span ng-if="!remote.showSettings">{{remote.source}}</span>
         <span ng-if="remote.showSettings">Settings</span>
@@ -51,6 +70,7 @@
     <div ng-controller="SettingsController as settings" class="settings">
 
       <ul class="currentDevice" ng-if="settings.currentDevice">
+        <li class="title">Selected device</li>
         <li class="single-device">
           <div class="data">
             <span>{{settings.currentDevice.name}}</span>
@@ -84,7 +104,7 @@
 
 
       <div class="noDevice" ng-if="settings.devices.length">
-        {{settings.devices.length}} SoundTouch Find
+        {{settings.devices.length}} SoundTouch Found
       </div>
 
       <ul ng-if="settings.devices.length">
@@ -109,6 +129,8 @@
       </ul>
 
       <h3 ng-if="vm.devices && vm.devices.length == 0 && !settings.scanProgress">No device found <i class="fa fa-frown-o"></i></h3>
+
+      <div class="contact">Develop with <i style="color:#DD7070" class="fa fa-heart"></i> By <a target="_blank" href="http://aurelien-loyer.fr">Aurélien</a></li>
 
     </div>
     <div id="noSettings" ng-if="0">
