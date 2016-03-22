@@ -22,8 +22,8 @@ If the extension is valid, it'll be loaded up and active right away! If it's inv
 
 # TODO
 - [x] Settings page
-- [ ] Integrate settings in popup
-- [ ] News style
-- [ ] Search SoundTouch IP
-- [ ] AngularJs
-- [ ] ...
+- [x] Integrate settings in popup
+- [x] News style
+- [x] Search SoundTouch IP
+- [x] AngularJs
+- [ ] Resolve Bug
