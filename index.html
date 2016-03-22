@@ -48,12 +48,12 @@
           <li ng-repeat="source in remote.sources" ng-class="remote.source == source.source ? 'selected' : ''">{{source.source}}</li>
         </ul>
         <div class="buttonList">
-          <span>1</span>
-          <span>2</span>
-          <span>3</span>
-          <span>4</span>
-          <span>5</span>
-          <span>6</span>
+          <span ng-mousedown="remote.pushUpButton('PRESET_1')">1</span>
+          <span ng-mousedown="remote.pushUpButton('PRESET_2')">2</span>
+          <span ng-mousedown="remote.pushUpButton('PRESET_3')">3</span>
+          <span ng-mousedown="remote.pushUpButton('PRESET_4')">4</span>
+          <span ng-mousedown="remote.pushUpButton('PRESET_5')">5</span>
+          <span ng-mousedown="remote.pushUpButton('PRESET_6')">6</span>
         </div>
       </div>
 
