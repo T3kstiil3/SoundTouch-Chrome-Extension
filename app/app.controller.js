@@ -259,6 +259,7 @@ function RemoteController($scope,$http,settingsService) {
     }).then(function(){
       getVolume();
       setTimeout(function() { getNowPlaying(); }, 500);
+      if(button == "STANDBY") setTimeout(function() { pushDownButton('PLAY'); }, 2500);
       //Analytics send pushed button
       _gaq.push(['_trackEvent', button, 'clicked']);
     });
@@ -284,6 +285,7 @@ function RemoteController($scope,$http,settingsService) {
     }).then(function(){
       getVolume();
       setTimeout(function() { getNowPlaying(); }, 500);
+      if(button == "STANDBY") setTimeout(function() { pushDownButton('PLAY'); }, 2500);
       //Analytics send pushed button
       _gaq.push(['_trackEvent', button, 'clicked']);
     });
