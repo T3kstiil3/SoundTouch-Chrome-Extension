@@ -41,6 +41,7 @@ function RemoteController($scope,$http,settingsService) {
   vm.openSettingsPage = openSettingsPage;
   vm.toggleSettings = toggleSettings;
   vm.toggleSources = toggleSources;
+  vm.setVolume = setVolume;
 
   var settings;
   var volume;
@@ -131,6 +132,10 @@ function RemoteController($scope,$http,settingsService) {
         vm.volumeBar = volume;
       }
     });
+  }
+
+  function setVolume(event){
+    console.log(event);
   }
 
   //Now Playing display

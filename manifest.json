@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "SoundTouch Chrome Extension",
-  "description": "This extension will help you to controll SoundTouch with your favorite brower Chrome :)",
-  "version": "1.0",
+  "description": "The extension Chrome Extension SoundTouch will enable all the people connected to your network to control your Bose speaker.",
+  "version": "1.1.2",
 
   "browser_action": {
    "default_icon": "img/icon.png",

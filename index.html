@@ -37,7 +37,7 @@
 
       <div class="volumeControl {{remote.showSources}}">
         <i class="fa fa-volume-down buttonRemote" ng-mouseup="remote.pushUpButton('VOLUME_DOWN')" ng-mousedown="remote.pushDownButton('VOLUME_DOWN')"></i>
-        <div class="volumeBarContenair">
+        <div class="volumeBarContenair" ng-click="remote.setVolume($event)">
           <div class="volumeBar" style="width:{{remote.volumeBar}}%;"></div>
         </div>
         <i class="fa fa-volume-up buttonRemote" ng-mouseup="remote.pushUpButton('VOLUME_UP')" ng-mousedown="remote.pushDownButton('VOLUME_UP')"></i>
@@ -130,7 +130,7 @@
 
       <h3 ng-if="vm.devices && vm.devices.length == 0 && !settings.scanProgress">No device found <i class="fa fa-frown-o"></i></h3>
 
-      <div class="contact">Develop with <i style="color:#DD7070" class="fa fa-heart"></i> By <a target="_blank" href="http://aurelien-loyer.fr">Aurélien</a></li>
+      <div class="contact">v{{settings.version}} - Developed with <i style="color:#DD7070" class="fa fa-heart"></i> By <a target="_blank" href="http://aurelien-loyer.fr">Aurélien</a></li>
 
     </div>
     <div id="noSettings" ng-if="0">
@@ -147,5 +147,7 @@
     <script src="app/app.controller.js"></script>
     <script src="app/settings.controller.js"></script>
     <script src="app/settings.service.js"></script>
+    <script src="app/ipresolver.factory.js"></script>
+    
   </body>
 </html>

@@ -511,3 +511,15 @@ svg:root{
   cursor: pointer;
   margin-bottom: 20px;
 }
+
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1280px) {
+
+    .cover{height: 200px;}
+    #content .progressBarContenair{
+        top: 195px;
+    }
+    #content .timeInfo{
+      top: 165px;
+    }
+}
