@@ -405,6 +405,27 @@ svg:root{
   padding: 0;
 }
 
+.settings .searchBose{
+  text-align: center;
+  font-size: 2em;
+}
+
+.settings .searchBose #loader{
+  margin-bottom: 20px;
+}
+
+
+.settings .searchBoseProgressContenair{
+  height: 10px;
+  width: 100%;
+  background: #E8EEF3;
+  margin-bottom: 10px;
+}
+.settings .searchBoseProgress{
+  height: 10px;
+  background: #5A6F81;
+}
+
 .settings .single-device{
   display: flex;
   list-style: none;

@@ -96,7 +96,13 @@
         Scan
       </button>
 
-      <i id="loader" ng-if='settings.scanProgress' class="fa fa-circle-o-notch fa-spin"></i>
+      <div class="searchBose" ng-if='settings.scanProgress'>
+        <i id="loader" class="fa fa-circle-o-notch fa-spin"></i>
+        <div class="searchBoseProgressContenair">
+          <div class="searchBoseProgress" style="width:{{settings.testIp.progressPourcent}}%;"></div>
+        </div>
+        {{settings.testIp.progressPourcent}} %
+      </div>
 
       <div class="noDevice" ng-if="settings.noDevice">
         No SoundTouch Find
@@ -148,6 +154,6 @@
     <script src="app/settings.controller.js"></script>
     <script src="app/settings.service.js"></script>
     <script src="app/ipresolver.factory.js"></script>
-    
+
   </body>
 </html>
