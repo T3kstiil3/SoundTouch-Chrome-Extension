@@ -378,6 +378,10 @@ header #settings_btn:hover{
   font-size: 16px;
 }
 
+.settings .problem{
+  margin-top: 20px;
+}
+
 svg path{
   fill: #7EBAE5;
 }

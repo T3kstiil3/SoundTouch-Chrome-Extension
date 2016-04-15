@@ -11,12 +11,22 @@ function SettingsController($http,$q,settingsService,IPResolverService){
   vm.scanNetwork = scanNetwork;
   vm.selectDevice = selectDevice;
   vm.reset = reset;
+  vm.sendEmail = sendEmail;
   vm.testIp = {};
   vm.testIp.progressPourcent = 0;
 
   var ips = [];
   var manifest = chrome.runtime.getManifest();
   if(manifest) vm.version = manifest.version;
+
+  function sendEmail() {
+    var emailUrl = "mailto:aur.loy@gmail.com";
+    chrome.tabs.create({ url: emailUrl }, function(tab) {
+        setTimeOut(function() {
+            chrome.tabs.remove(tab.id);
+        }, 500);
+    });
+  }
 
   function reset(){
     settingsService.setDevice(null);
@@ -45,6 +55,7 @@ function SettingsController($http,$q,settingsService,IPResolverService){
       vm.scanProgress = false;
       if(vm.devices.length == 0){
         vm.noDevice = true;
+        _gaq.push(['_trackEvent', 'No device Found', 'find']);
       }
     }else{
       testIpAdresse(ips[number]).then(function(response){
@@ -55,6 +66,7 @@ function SettingsController($http,$q,settingsService,IPResolverService){
           device.name = xmlDoc.getElementsByTagName("name")[0].childNodes[0].nodeValue;
           device.type = xmlDoc.getElementsByTagName("type")[0].childNodes[0].nodeValue;
           device.ipAddress = xmlDoc.getElementsByTagName("ipAddress")[0].childNodes[0].nodeValue;
+          _gaq.push(['_trackEvent', device.name, 'find']);
           vm.devices.push(device);
           callTest(number+1);
         }else if(number != 254){
@@ -71,10 +83,12 @@ function SettingsController($http,$q,settingsService,IPResolverService){
   function scanNetwork(){
     //Analytics send pushed button
     _gaq.push(['_trackEvent', "Scan Network Button", 'clicked']);
+
     vm.devices = [];
     vm.scanProgress = true;
     vm.noDevice = false;
     IPResolverService.resolve().then(function(ip) {
+      _gaq.push(['_trackEvent', ip, 'user local ip']);
       if(ip && ValidateIPaddress(ip)){
         ip = ip.split(".");
         for (var i = 0; i < 254; i++) {
@@ -82,29 +96,6 @@ function SettingsController($http,$q,settingsService,IPResolverService){
           ips.push(testIp);
         }
         callTest(0);
-        /*
-        angular.forEach(ips, function(testIp){
-          console.log(testIp);
-          $http.get("http://"+testIp+":8090/info", {}).then(function successCallback(response) {
-            console.log(response);
-            if(response.status == 200){
-              console.log("on passe la !");
-              parser=new DOMParser();
-              var xmlDoc = parser.parseFromString(response.data,"text/xml");
-              var device = {};
-              device.name = xmlDoc.getElementsByTagName("name")[0].childNodes[0].nodeValue;
-              device.type = xmlDoc.getElementsByTagName("type")[0].childNodes[0].nodeValue;
-              device.ipAddress = xmlDoc.getElementsByTagName("ipAddress")[0].childNodes[0].nodeValue;
-              vm.devices.push(device);
-              vm.scanProgress = false;
-              vm.noDevice = false;
-            }
-          }, function errorCallback(response) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
-          });
-        });
-        */
       }
     }).catch(function() {
       console.log('Error');
