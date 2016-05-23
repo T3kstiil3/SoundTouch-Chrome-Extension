@@ -1,4 +1,9 @@
 # SoundTouch-Chrome-Extension
+
+[Link Chrome Extension](https://chrome.google.com/webstore/detail/soundtouch-chrome-extensi/gapfkijlllenhmgddoldcfedfiiakfgg)
+
+# Description
+
 SoundTouch Chrome Extension,
 Display the current playing music,
 Control the Soundtouch,
