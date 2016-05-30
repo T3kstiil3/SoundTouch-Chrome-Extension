@@ -181,7 +181,8 @@ function RemoteController($scope,$http,settingsService) {
             vm.artist  = xmlDoc.getElementsByTagName("artist")[0].childNodes[0].nodeValue;
             vm.album = xmlDoc.getElementsByTagName("album")[0].childNodes[0].nodeValue;
             vm.art = xmlDoc.getElementsByTagName("art")[0].childNodes[0].nodeValue;
-            vm.rating = xmlDoc.getElementsByTagName("rating")[0].childNodes[0].nodeValue;
+            if(xmlDoc.getElementsByTagName("rating") && xmlDoc.getElementsByTagName("rating")[0])
+              vm.rating = xmlDoc.getElementsByTagName("rating")[0].childNodes[0].nodeValue;
             vm.itemName = xmlDoc.getElementsByTagName("itemName")[0].childNodes[0].nodeValue;
             time = xmlDoc.getElementsByTagName("time")[0].childNodes[0].nodeValue;
             totalTime = xmlDoc.getElementsByTagName("time")[0].getAttribute("total");
