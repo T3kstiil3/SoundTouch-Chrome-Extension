@@ -12,7 +12,7 @@
     <div id="main" ng-class="remote.showSettings ? 'moveUp': ''" ng-controller="RemoteController as remote">
 
       <div id="content">
-        <div id="cover" class="cover" style="background:url({{remote.art}});background-repeat: no-repeat;">
+        <div id="cover" class="cover" style="background-image:url({{remote.art}});background-repeat: no-repeat;">
           <div ng-if="remote.timeInfo" class="timeInfo">{{remote.timeInfo}}</div>
         </div>
         <div ng-if="remote.progressBar" class="progressBarContenair">
@@ -44,9 +44,9 @@
       </div>
 
       <div class="sourceControl {{remote.showSources}}">
-        <ul>
-          <li ng-repeat="source in remote.sources" ng-class="remote.source == source.source ? 'selected' : ''">{{source.source}}</li>
-        </ul>
+        <div class="itemName">
+          Playlist : {{remote.itemName}}
+        </div>
         <div class="buttonList">
           <span ng-mousedown="remote.pushUpButton('PRESET_1')">1</span>
           <span ng-mousedown="remote.pushUpButton('PRESET_2')">2</span>
@@ -137,6 +137,13 @@
       <h3 ng-if="vm.devices && vm.devices.length == 0 && !settings.scanProgress">No device found <i class="fa fa-frown-o"></i></h3>
 
       <button class="problem" ng-click="settings.sendEmail()">Problem ? Contact me ! <i class="fa fa-smile-o" aria-hidden="true"></i></button>
+      <a class="buttonLink" href="https://github.com/T3kstiil3/SoundTouch-Chrome-Extension/issues/new" target="_blank">
+        <i class="fa fa-github" aria-hidden="true"></i>
+        Create Github issue
+      </a>
+
+      <span class="break"></span>
+
       <div class="contact">v{{settings.version}} - Developed with <i style="color:#DD7070" class="fa fa-heart"></i> By <a target="_blank" href="http://aurelien-loyer.fr">Aurélien</a></li>
 
     </div>

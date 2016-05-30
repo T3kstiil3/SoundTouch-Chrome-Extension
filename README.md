@@ -4,13 +4,11 @@
 
 # Description
 
-SoundTouch Chrome Extension,
-Display the current playing music,
-Control the Soundtouch,
-And more...
+The extension Chrome Extension SoundTouch will enable all the people connected to your networks to control your Bose speaker. Do not fight anymore for the remote ! Use this extension ! Display the playing song and change playlist.
 
 # Preview
-![Preview img](img/preview.jpg)
+
+![Preview img](img/preview.jpg =350x)
 
 # Load the extension (developer mode)
 
@@ -29,9 +27,11 @@ Alternatively, you can drag and drop the directory where your extension files li
 If the extension is valid, it'll be loaded up and active right away! If it's invalid, an error message will be displayed at the top of the page. Correct the error, and try again.
 
 # TODO
+
 - [x] Settings page
 - [x] Integrate settings in popup
-- [x] News style
+- [x] News styles
 - [x] Search SoundTouch IP
-- [x] AngularJs
+- [x] Switch to AngularJs
 - [ ] Resolve Bug
+- [ ] News features ?

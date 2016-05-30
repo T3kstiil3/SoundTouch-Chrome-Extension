@@ -269,6 +269,10 @@ header #settings_btn:hover{
   transform: translateX(0px);
 }
 
+.sourceControl .itemName{
+  padding: 10px 0px 15px;
+}
+
 .sourceControl ul{
   list-style: none;
   margin: 0;
@@ -352,16 +356,19 @@ header #settings_btn:hover{
 
 .settings{
   transition: all .2s ;
-  height: 100%;
+  /*height: 100%;*/
+  height: 500px;
   width: 100%;
   position: absolute;
   top: 0px;
   transition: all .2s;
   z-index: 1;
   margin-top: 60px;
+  overflow-y: scroll;
+  padding-bottom: 20px;
 }
 
-.settings button{
+.settings button, a.buttonLink{
   color: white;
   border: none;
   background: #5A6F81;
@@ -372,6 +379,14 @@ header #settings_btn:hover{
   font-size: 15px;
 }
 
+.settings .buttonLink{
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 0px;
+  margin-top: 20px;
+}
+
 .settings .noDevice{
   text-align: center;
   padding: 20px;
@@ -380,6 +395,7 @@ header #settings_btn:hover{
 
 .settings .problem{
   margin-top: 20px;
+  cursor: pointer;
 }
 
 svg path{
@@ -477,13 +493,20 @@ svg:root{
   transition: all .2s;
 }
 
-.settings .contact{
-  position: absolute;
-  bottom: 66px;
+.settings .break{
+  display: block;
   height: 20px;
-  margin-top: -20px;
+  width: 100%;
+}
+
+.settings .contact{
+  position: fixed;
+  bottom: 0px;
   z-index: 99;
-  right: 20px;
+  background: white;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0px;
 }
 
 #remote{
