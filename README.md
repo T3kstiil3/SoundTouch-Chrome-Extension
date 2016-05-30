@@ -8,7 +8,7 @@ The extension Chrome Extension SoundTouch will enable all the people connected t
 
 # Preview
 
-![Preview img](img/preview.jpg =350x)
+<img src="img/preview.jpg" width="350"/>
 
 # Load the extension (developer mode)
 
