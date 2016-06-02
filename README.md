@@ -12,9 +12,11 @@ The extension Chrome Extension SoundTouch will enable all the people connected t
 
 # No Bose SoundTouch ?
 
-[Bose Système audio sans fil SoundTouch 10 - Noir](http://www.amazon.fr/gp/product/B0117RGGDE/ref=as_li_tl?ie=UTF8&camp=1642&creative=19458&creativeASIN=B0117RGGDE&linkCode=as2&tag=aureli-21)
-[Système audio sans fil Bose SoundTouch 20 série III - Noir](http://www.amazon.fr/gp/product/B0117RGP58/ref=as_li_tl?ie=UTF8&camp=1642&creative=19458&creativeASIN=B0117RGP58&linkCode=as2&tag=aureli-21)
-[Système audio sans fil Bose SoundTouch 30 série III - Noir](http://www.amazon.fr/gp/product/B0117RGXLE/ref=as_li_tl?ie=UTF8&camp=1642&creative=19458&creativeASIN=B0117RGXLE&linkCode=as2&tag=aureli-21)
+[Bose Système audio sans fil SoundTouch 10 - Noir](http://www.amazon.fr/gp/product/B0117RGGDE/ref=as_li_tl?ie=UTF8&camp=1642&creative=19458&creativeASIN=B0117RGGDE&linkCode=as2&tag=aureli-21) <br>
+
+[Système audio sans fil Bose SoundTouch 20 série III - Noir](http://www.amazon.fr/gp/product/B0117RGP58/ref=as_li_tl?ie=UTF8&camp=1642&creative=19458&creativeASIN=B0117RGP58&linkCode=as2&tag=aureli-21) <br>
+
+[Système audio sans fil Bose SoundTouch 30 série III - Noir](http://www.amazon.fr/gp/product/B0117RGXLE/ref=as_li_tl?ie=UTF8&camp=1642&creative=19458&creativeASIN=B0117RGXLE&linkCode=as2&tag=aureli-21) <br>
 
 # Load the extension (developer mode)
 
