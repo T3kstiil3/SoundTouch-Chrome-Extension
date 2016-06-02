@@ -10,6 +10,12 @@ The extension Chrome Extension SoundTouch will enable all the people connected t
 
 <img src="img/preview.jpg" width="350"/>
 
+# No Bose SoundTouch ?
+
+[Bose Système audio sans fil SoundTouch 10 - Noir](http://www.amazon.fr/gp/product/B0117RGGDE/ref=as_li_tl?ie=UTF8&camp=1642&creative=19458&creativeASIN=B0117RGGDE&linkCode=as2&tag=aureli-21)
+[Système audio sans fil Bose SoundTouch 20 série III - Noir](http://www.amazon.fr/gp/product/B0117RGP58/ref=as_li_tl?ie=UTF8&camp=1642&creative=19458&creativeASIN=B0117RGP58&linkCode=as2&tag=aureli-21)
+[Système audio sans fil Bose SoundTouch 30 série III - Noir](http://www.amazon.fr/gp/product/B0117RGXLE/ref=as_li_tl?ie=UTF8&camp=1642&creative=19458&creativeASIN=B0117RGXLE&linkCode=as2&tag=aureli-21)
+
 # Load the extension (developer mode)
 
 Extensions that you download from the Chrome Web Store are packaged up as .crx files, which is great for distribution, but not so great for development. Recognizing this, Chrome gives you a quick way of loading up your working directory for testing. Let's do that now.
