@@ -49,7 +49,7 @@
           <span ng-if="!remote.itemNewName">Playlist : {{remote.itemName}}</span>
         </div>
         <div class="buttonList" ng-mouseleave="remote.itemNewName = null;remote.newSource = null">
-          <span ng-repeat="preset in remote.presets" ng-mouseover="remote.itemNewName=preset.name;remote.newSource=preset.source" ng-mousedown="remote.pushUpButton('PRESET_{{preset.id}}')">{{preset.id}}</span>
+          <span ng-class="(preset.name == remote.itemName) ? 'hover' : ''" ng-repeat="preset in remote.presets" ng-mouseover="remote.itemNewName=preset.name;remote.newSource=preset.source" ng-mousedown="remote.pushUpButton('PRESET_{{preset.id}}')">{{preset.id}}</span>
         </div>
       </div>
 

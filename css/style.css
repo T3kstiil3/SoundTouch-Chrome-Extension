@@ -316,7 +316,8 @@ header #settings_btn:hover{
   transition: all .2s;
 }
 
-.sourceControl .buttonList span:hover{
+.sourceControl .buttonList span:hover,
+.sourceControl .buttonList span.hover{
   background: #26313C;
   font-weight: bold;
 }
