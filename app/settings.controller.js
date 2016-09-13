@@ -88,6 +88,7 @@ function SettingsController($http,$q,settingsService,IPResolverService){
     vm.scanProgress = true;
     vm.noDevice = false;
     IPResolverService.resolve().then(function(ip) {
+      console.log(ip);
       _gaq.push(['_trackEvent', ip, 'user local ip']);
       if(ip && ValidateIPaddress(ip)){
         ip = ip.split(".");
@@ -97,8 +98,9 @@ function SettingsController($http,$q,settingsService,IPResolverService){
         }
         callTest(0);
       }
-    }).catch(function() {
+    }).catch(function(e) {
       console.log('Error');
+      console.log(e);
     });
 
   }

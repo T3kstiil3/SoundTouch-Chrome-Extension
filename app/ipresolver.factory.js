@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('app')
-    .factory('IPResolverService', IPResolverService);
+  .factory('IPResolverService', IPResolverService);
 
   IPResolverService.$inject = ['$q'];
 
@@ -64,8 +64,21 @@
       pc.onicecandidate = function(ice){
 
         //skip non-candidate events
-        if(ice.candidate)
-          handleCandidate(ice.candidate.candidate);
+        //skip non-candidate events
+        if(ice.candidate){
+
+            //match just the IP address
+            var ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3})/
+            if(ip_regex.exec(ice.candidate.candidate)){
+              var ip_addr = ip_regex.exec(ice.candidate.candidate)[1];
+
+              //remove duplicates
+              if(ip_dups[ip_addr] === undefined)
+                  deferred.resolve(ip_addr);
+
+              ip_dups[ip_addr] = true;
+            }
+        }
       };
 
       //create a bogus data channel
@@ -79,19 +92,6 @@
 
       }, function(){});
 
-      //wait for a while to let everything done
-      setTimeout(function(){
-        //read candidate info from local description
-        //raddr 192.168.0.102 rport
-        var ip_regex = /raddr ([0-9]{1,3}(\.[0-9]{1,3}){3}) rport/;
-        var ips = ip_regex.exec(pc.localDescription.sdp);
-        if (ips && ips.length > 2) {
-          deferred.resolve(ips[1]);
-        } else {
-          deferred.reject();
-        }
-
-      }, 1000);
       return deferred.promise;
     }
 
