@@ -12,7 +12,7 @@
     <div id="main" ng-class="remote.showSettings ? 'moveUp': ''" ng-controller="RemoteController as remote">
 
       <div id="content">
-        <div id="cover" class="cover" style="background-image:url({{remote.art}});background-repeat: no-repeat;">
+        <div id="cover" class="cover" style="background:url({{remote.art}});background-repeat: no-repeat;background-size: cover;">
           <div ng-if="remote.timeInfo" class="timeInfo">{{remote.timeInfo}}</div>
         </div>
         <div ng-if="remote.progressBar" class="progressBarContenair">
@@ -21,7 +21,7 @@
 
         <span id="track">{{remote.track}}</span>
         <span id="album">{{remote.album}}</span>
-        <span id="artist">{{remote.artist}}</span>
+        <span id="artist" ng-click="remote.openSettingIfnoDevice()">{{remote.artist}} <i ng-if="!remote.device" class="fa fa-cog"></i></span>
 
         <span class="stanby" ng-if="remote.buttonStart" ng-mousedown="remote.pushDownButton('POWER')"><i class="fa fa-power-off"></i></span>
 
@@ -44,23 +44,22 @@
       </div>
 
       <div class="sourceControl {{remote.showSources}}">
-        <div class="itemName">
-          Playlist : {{remote.itemName}}
+        <div class="">
+          <span ng-if="remote.itemNewName">{{remote.itemNewName}}</span>
+          <span ng-if="!remote.itemNewName">Playlist : {{remote.itemName}}</span>
         </div>
-        <div class="buttonList">
-          <span ng-mousedown="remote.pushUpButton('PRESET_1')">1</span>
-          <span ng-mousedown="remote.pushUpButton('PRESET_2')">2</span>
-          <span ng-mousedown="remote.pushUpButton('PRESET_3')">3</span>
-          <span ng-mousedown="remote.pushUpButton('PRESET_4')">4</span>
-          <span ng-mousedown="remote.pushUpButton('PRESET_5')">5</span>
-          <span ng-mousedown="remote.pushUpButton('PRESET_6')">6</span>
+        <div class="buttonList" ng-mouseleave="remote.itemNewName = null;remote.newSource = null">
+          <span ng-repeat="preset in remote.presets" ng-mouseover="remote.itemNewName=preset.name;remote.newSource=preset.source" ng-mousedown="remote.pushUpButton('PRESET_{{preset.id}}')">{{preset.id}}</span>
         </div>
       </div>
 
       <div class="footerPopup">
         <i class="fa fa-list-ul" ng-if="!remote.showSettings" ng-click='remote.toggleSources()'></i>
         <i class="fa fa-cog cog-left" ng-if="remote.showSettings"></i>
-        <span ng-if="!remote.showSettings">{{remote.source}}</span>
+        <span ng-if="!remote.showSettings">
+          <span ng-if="!remote.newSource">{{remote.source}}</span>
+          <span ng-if="remote.newSource">{{remote.newSource}}</span>
+        </span>
         <span ng-if="remote.showSettings">Settings</span>
         <i class="fa" ng-class="remote.showSettings ? 'fa-times': 'fa-cog'" ng-click="remote.toggleSettings()"></i>
       </div>
@@ -119,7 +118,7 @@
             <span>{{device.name}}</span>
             <span>{{device.type}}</span>
             <span>{{device.ipAddress}}</span>
-            <span class="choice">Choice</span>
+            <span class="choice">Select</span>
           </div>
           <svg width="67" height="97" xmlns="http://www.w3.org/2000/svg">
            <g>

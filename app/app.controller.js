@@ -34,6 +34,7 @@ function RemoteController($scope,$http,settingsService) {
   vm.track = "";
   vm.album = "";
   vm.artist = "";
+  vm.presets = [];
 
   vm.pushUpButton = pushUpButton;
   vm.pushDownButton = pushDownButton;
@@ -42,6 +43,7 @@ function RemoteController($scope,$http,settingsService) {
   vm.toggleSettings = toggleSettings;
   vm.toggleSources = toggleSources;
   vm.setVolume = setVolume;
+  vm.openSettingIfnoDevice = openSettingIfnoDevice;
 
   var settings;
   var volume;
@@ -66,14 +68,20 @@ function RemoteController($scope,$http,settingsService) {
     if(vm.device){
       getNowPlaying();
       getSources();
+      getPresets();
     }
   });
+
+  function openSettingIfnoDevice(){
+    if(!vm.device)
+      toggleSettings();
+  }
 
   function defaultData(){
     clearInterval(timer);
     vm.art = "img/img_loader.gif";
     vm.track = "No SoundTouch Selected";
-    vm.artist = "Go to Settings !";
+    vm.artist = "Go to Settings ";
     vm.album = "";
     vm.ratingClass = "fa-heart-o";
     vm.playStatus = 'fa-play';
@@ -136,6 +144,28 @@ function RemoteController($scope,$http,settingsService) {
 
   function setVolume(event){
     console.log(event);
+  }
+
+  function getPresets(){
+    //
+    var url = 'http://'+vm.device.ipAddress+':8090/presets';
+    $http.get(url, {}).then(function(response) {
+      if (window.DOMParser){
+        parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(response.data,"text/xml");
+        for (var i = 0; i < xmlDoc.getElementsByTagName("preset").length; i++) {
+          var preset = xmlDoc.getElementsByTagName("preset")[i];
+          vm.presets.push({
+            'id' : preset.getAttribute("id"),
+            'source' : preset.childNodes[0].getAttribute("source"),
+            'account' : preset.childNodes[0].getAttribute("sourceAccount"),
+            'isPresetable' : preset.childNodes[0].getAttribute("isPresetable"),
+            'type' : preset.childNodes[0].getAttribute("type"),
+            'name': preset.getElementsByTagName("itemName")[0].childNodes[0].nodeValue
+          });
+        }
+      }
+    });
   }
 
   //Now Playing display
@@ -202,9 +232,19 @@ function RemoteController($scope,$http,settingsService) {
 
         }else{
           if(xmlDoc.getElementsByTagName("ContentItem")[0].getAttribute("source") == 'STANDBY'){
-            vm.track = "SoundTouch on Stanby";
+            vm.track = "SoundTouch on Standby";
             vm.artist = "";
+            vm.itemName = "No playlist selected"
             vm.buttonStart = true;
+          }else if(xmlDoc.getElementsByTagName("ContentItem")[0].getAttribute("source") == 'INVALID_SOURCE'){
+            vm.art = "img/img_loader.gif";
+            vm.track = "No Music Source Selected";
+            vm.artist = "Choice playlist !";
+            vm.album = "";
+            vm.ratingClass = "fa-heart-o";
+            vm.playStatus = 'fa-play';
+            vm.timeInfo = false;
+            vm.progressBar = false;
           }
         }
       }
