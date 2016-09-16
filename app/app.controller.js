@@ -63,14 +63,19 @@ function RemoteController($scope,$http,settingsService) {
   //Set default data to bind;
   defaultData();
 
-  settingsService.getDevice(function(data){
-    vm.device = data.device;
-    if(vm.device){
-      getNowPlaying();
-      getSources();
-      getPresets();
-    }
-  });
+  getData();
+  setInterval(function(){getData();}, 5000);
+
+  function getData(){
+    settingsService.getDevice(function(data){
+      vm.device = data.device;
+      if(vm.device){
+        getNowPlaying();
+        getSources();
+        getPresets();
+      }
+    });
+  }
 
   function openSettingIfnoDevice(){
     if(!vm.device)
@@ -153,6 +158,7 @@ function RemoteController($scope,$http,settingsService) {
       if (window.DOMParser){
         parser = new DOMParser();
         var xmlDoc = parser.parseFromString(response.data,"text/xml");
+        vm.presets = [];
         for (var i = 0; i < xmlDoc.getElementsByTagName("preset").length; i++) {
           var preset = xmlDoc.getElementsByTagName("preset")[i];
           vm.presets.push({
@@ -236,6 +242,13 @@ function RemoteController($scope,$http,settingsService) {
             vm.artist = "";
             vm.itemName = "No playlist selected"
             vm.buttonStart = true;
+            vm.art = "img/img_loader.gif";
+            vm.album = "";
+            vm.ratingClass = "fa-heart-o";
+            vm.playStatus = 'fa-play';
+            vm.timeInfo = false;
+            vm.progressBar = false;
+            clearInterval(timer);
           }else if(xmlDoc.getElementsByTagName("ContentItem")[0].getAttribute("source") == 'INVALID_SOURCE'){
             vm.art = "img/img_loader.gif";
             vm.track = "No Music Source Selected";
