@@ -55,7 +55,7 @@ function SettingsController($http,$q,settingsService,IPResolverService){
       vm.scanProgress = false;
       if(vm.devices.length == 0){
         vm.noDevice = true;
-        _gaq.push(['_trackEvent', 'No device Found', 'find']);
+        _gaq.push(['_trackEvent', 'Device not found', 'find']);
       }
     }else{
       testIpAdresse(ips[number]).then(function(response){

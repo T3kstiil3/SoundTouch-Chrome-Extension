@@ -436,6 +436,14 @@ svg:root{
   margin-bottom: 20px;
 }
 
+.settings .searchBose p{
+  max-width: 80%;
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  margin: 20px auto;
+}
+
 
 .settings .searchBoseProgressContenair{
   height: 10px;

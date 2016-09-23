@@ -163,6 +163,7 @@ function RemoteController($scope,$http,settingsService) {
           var preset = xmlDoc.getElementsByTagName("preset")[i];
           vm.presets.push({
             'id' : preset.getAttribute("id"),
+            'button' : 'PRESET_'+preset.getAttribute("id"),
             'source' : preset.childNodes[0].getAttribute("source"),
             'account' : preset.childNodes[0].getAttribute("sourceAccount"),
             'isPresetable' : preset.childNodes[0].getAttribute("isPresetable"),
@@ -261,6 +262,15 @@ function RemoteController($scope,$http,settingsService) {
           }
         }
       }
+    },function(data) {
+      vm.art = "img/img_loader.gif";
+      vm.track = "No Music Source Selected";
+      vm.artist = "Choice playlist !";
+      vm.album = "";
+      vm.ratingClass = "fa-heart-o";
+      vm.playStatus = 'fa-play';
+      vm.timeInfo = false;
+      vm.progressBar = false;
     });
   }
 
