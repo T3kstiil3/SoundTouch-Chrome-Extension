@@ -3,6 +3,8 @@ html,body{
     margin: 0;
     border: none;
     font-family: Raleway;
+    overflow: hidden;
+    height: 570px;
 }
 
 header{

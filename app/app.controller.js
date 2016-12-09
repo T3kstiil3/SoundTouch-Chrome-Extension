@@ -68,8 +68,8 @@ function RemoteController($scope,$http,settingsService) {
 
   function getData(){
     settingsService.getDevice(function(data){
-      vm.device = data.device;
-      if(vm.device){
+      if(data && data.device){
+        vm.device = data.device;
         getNowPlaying();
         getSources();
         getPresets();
@@ -253,8 +253,8 @@ function RemoteController($scope,$http,settingsService) {
           }else if(xmlDoc.getElementsByTagName("ContentItem")[0].getAttribute("source") == 'INVALID_SOURCE'){
             vm.art = "img/img_loader.gif";
             vm.track = "No Music Source Selected";
-            vm.artist = "Choice playlist !";
-            vm.album = "";
+            vm.artist = "Choose playlist !";
+            vm.album = "_____";
             vm.ratingClass = "fa-heart-o";
             vm.playStatus = 'fa-play';
             vm.timeInfo = false;
@@ -265,7 +265,7 @@ function RemoteController($scope,$http,settingsService) {
     },function(data) {
       vm.art = "img/img_loader.gif";
       vm.track = "No Music Source Selected";
-      vm.artist = "Choice playlist !";
+      vm.artist = "Choose playlist !";
       vm.album = "";
       vm.ratingClass = "fa-heart-o";
       vm.playStatus = 'fa-play';

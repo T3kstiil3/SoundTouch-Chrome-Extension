@@ -10,6 +10,22 @@ The extension Chrome Extension SoundTouch will enable all the people connected t
 
 <img src="img/preview.jpg" width="350"/>
 
+# Code
+
+## Electron task
+
+```
+# Create binaries for both Windows and OS X
+npm run pack
+
+# Create installer for OS X
+npm run build:osx
+
+# Start app directly
+npm run dev
+...
+```
+
 # No Bose SoundTouch ?
 
 [Bose Système audio sans fil SoundTouch 10 - Noir](http://www.amazon.fr/gp/product/B0117RGGDE/ref=as_li_tl?ie=UTF8&camp=1642&creative=19458&creativeASIN=B0117RGGDE&linkCode=as2&tag=aureli-21) <br>
@@ -41,5 +57,7 @@ If the extension is valid, it'll be loaded up and active right away! If it's inv
 - [x] News styles
 - [x] Search SoundTouch IP
 - [x] Switch to AngularJs
+- [ ] Electron app
+- [ ] npm task
 - [ ] Resolve Bug
 - [ ] News features ?

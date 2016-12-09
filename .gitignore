@@ -1,2 +1,9 @@
 # ignore list
+
 .DS_Store
+npm-debug.log
+
+electron-packager/
+locales/
+dist/
+node_modules/

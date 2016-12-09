@@ -14,18 +14,23 @@ function SettingsController($http,$q,settingsService,IPResolverService){
   vm.sendEmail = sendEmail;
   vm.testIp = {};
   vm.testIp.progressPourcent = 0;
+  vm.version = "";
 
   var ips = [];
-  var manifest = chrome.runtime.getManifest();
-  if(manifest) vm.version = manifest.version;
+  if(typeof chrome !== 'undefined' && chrome && chrome.storage){
+    var manifest = chrome.runtime.getManifest();
+    if(manifest) vm.version = manifest.version;
+  }
 
   function sendEmail() {
     var emailUrl = "mailto:aur.loy@gmail.com";
-    chrome.tabs.create({ url: emailUrl }, function(tab) {
-        setTimeOut(function() {
-            chrome.tabs.remove(tab.id);
-        }, 500);
-    });
+    if(typeof chrome !== 'undefined'){
+      chrome.tabs.create({ url: emailUrl }, function(tab) {
+          setTimeOut(function() {
+              chrome.tabs.remove(tab.id);
+          }, 500);
+      });
+    }
   }
 
   function reset(){
@@ -40,7 +45,10 @@ function SettingsController($http,$q,settingsService,IPResolverService){
   }
 
   settingsService.getDevice(function(data){
-    vm.currentDevice = data.device;
+    console.log(data);
+    if (data && data.device){
+      vm.currentDevice = data.device;
+    }
   });
 
   function testIpAdresse(el){
