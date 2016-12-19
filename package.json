@@ -4,38 +4,45 @@
   "version": "1.2.0",
   "author": "Aurélien Loyer <aur.loy@gmail.com>",
   "main": "main.js",
-  
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron .",
     "dev": "NODE_ENV='development' npm run start",
     "dist": "build -mwl --x64 --ia32"
   },
-  
   "devDependencies": {
     "electron": "^1.4.6",
     "electron-builder": "^8.5.3",
-    "electron-packager": "^8.2.0"
+    "electron-packager": "^8.2.0",
+    "gulp": "^3.9.1",
+    "gulp-zip": "^3.2.0"
   },
-  
   "dependencies": {
     "electron-json-storage": "^2.1.0"
   },
-  
   "build": {
     "appId": "fr.aurelien-loyer",
     "dmg": {
-        "title": "SoundTouch Remote Control",
-        "icon": "/Users/Aurelien/Web/Perso/SoundTouch-Chrome-Extension/img/osx/icon.icns",
-        "iconSize": 175,
-        "contents": [
-          { "x": 355, "y": 125, "type": "link", "path": "/Applications" },
-          { "x": 155, "y": 125, "type": "file" }
-        ]
+      "title": "SoundTouch Remote Control",
+      "icon": "/Users/Aurelien/Web/Perso/SoundTouch-Chrome-Extension/img/osx/icon.icns",
+      "iconSize": 175,
+      "contents": [
+        {
+          "x": 355,
+          "y": 125,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 155,
+          "y": 125,
+          "type": "file"
+        }
+      ]
     },
     "win": {
-        "title": "SoundTouch Remote Control",
-        "icon" : "/Users/Aurelien/Web/Perso/SoundTouch-Chrome-Extension/img/win/icon.ico"
+      "title": "SoundTouch Remote Control",
+      "icon": "/Users/Aurelien/Web/Perso/SoundTouch-Chrome-Extension/img/win/icon.ico"
     }
   }
 }
