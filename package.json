@@ -1,14 +1,16 @@
 {
   "name": "SoundTouch-Remote-Control",
   "description": "The SoundTouch remote control will enable all the people connected to your network to control your Bose speaker.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "Aurélien Loyer <aur.loy@gmail.com>",
   "main": "main.js",
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron .",
     "dev": "NODE_ENV='development' npm run start",
-    "dist": "build -mwl --x64 --ia32"
+    "dist": "build -mwl --x64 --ia32",
+    "export" : "gulp export",
+    "zip" : "gulp zip"
   },
   "devDependencies": {
     "electron": "^1.4.6",

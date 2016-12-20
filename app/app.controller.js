@@ -87,13 +87,12 @@ function RemoteController($scope,$http,settingsService) {
     vm.art = "img/img_loader.gif";
     vm.track = "No SoundTouch Selected";
     vm.artist = "Go to Settings ";
-    vm.album = "";
+    vm.album = "_____";
     vm.ratingClass = "fa-heart-o";
     vm.playStatus = 'fa-play';
     vm.timeInfo = false;
     vm.progressBar = false;
   }
-
 
   //getSources
   //:8090/sources

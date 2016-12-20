@@ -12,6 +12,14 @@ The extension Chrome Extension SoundTouch will enable all the people connected t
 
 # Code
 
+## Gulp task
+
+```
+# Zip project 
+gulp zip
+...
+```
+
 ## Electron task
 
 ```
