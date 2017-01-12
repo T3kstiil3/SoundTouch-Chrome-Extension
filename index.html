@@ -95,8 +95,21 @@
         Search SoundTouch
       </button>
 
+      <button class="manuallyButton" ng-if='!settings.name && !settings.scanProgress' ng-click="settings.manuallySet()">
+        <i class="fa fa-pencil"></i>
+        Set manually
+      </button>
+
+      <div ng-if="settings.manually" class="manuallySet">
+        <label>Enter SoundTouch Ip</label>
+        <input type="text" ng-model="settings.ipToTest" placeholder="192.168.0.28">
+        <button ng-click="settings.testManualIp()">Test IP</button>
+        <label ng-if="settings.testIpResult" >{{settings.testIpResult}}</label>
+      </div>
+
       <div class="searchBose" ng-if='settings.scanProgress'>
-        <p>Make sure your soundtouch is power on and connected to same network of your computer</p>
+        <p><strong>Your IP : {{settings.myIp}}</strong></p>
+        <p>Make sure your soundtouch is power on, connected to same network of your computer and playing some good sound from internet (no bluetooth)</p>
         <i id="loader" class="fa fa-circle-o-notch fa-spin"></i>
         <div class="searchBoseProgressContenair">
           <div class="searchBoseProgress" style="width:{{settings.testIp.progressPourcent}}%;"></div>
@@ -107,7 +120,6 @@
       <div class="noDevice" ng-if="settings.noDevice">
         No SoundTouch Find
       </div>
-
 
       <div class="noDevice" ng-if="settings.devices.length">
         {{settings.devices.length}} SoundTouch Found
@@ -137,6 +149,7 @@
       <h3 ng-if="vm.devices && vm.devices.length == 0 && !settings.scanProgress">No device found <i class="fa fa-frown-o"></i></h3>
 
       <button class="problem" ng-click="settings.sendEmail()">Problem ? Contact me ! <i class="fa fa-smile-o" aria-hidden="true"></i></button>
+      
       <a class="buttonLink" href="https://github.com/T3kstiil3/SoundTouch-Chrome-Extension/issues/new" target="_blank">
         <i class="fa fa-github" aria-hidden="true"></i>
         Create Github issue

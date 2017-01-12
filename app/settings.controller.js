@@ -7,16 +7,23 @@ function SettingsController($http,$q,settingsService,IPResolverService){
 
   var vm = this;
   vm.scanProgress = false;
+  vm.manually = false;
+  vm.ipToTest = "";
+  vm.testIpResult = "";
   //Function
+  vm.manuallySet = manuallySet;
+  vm.testManualIp = testManualIp;
   vm.scanNetwork = scanNetwork;
   vm.selectDevice = selectDevice;
   vm.reset = reset;
   vm.sendEmail = sendEmail;
   vm.testIp = {};
   vm.testIp.progressPourcent = 0;
+  vm.testIp.stop = false;
   vm.version = "";
 
   var ips = [];
+  vm.myIp = "";
   if(typeof chrome !== 'undefined' && chrome && chrome.storage){
     var manifest = chrome.runtime.getManifest();
     if(manifest) vm.version = manifest.version;
@@ -39,7 +46,10 @@ function SettingsController($http,$q,settingsService,IPResolverService){
   }
 
   function selectDevice(device,index){
+    _gaq.push(['_trackEvent', 'Device selected !', 'find']);
     settingsService.setDevice(device);
+    vm.noDevice = false;
+    vm.testIp.stop = true;
     vm.currentDevice = device;
     vm.devices.splice(index,1);
   }
@@ -56,6 +66,10 @@ function SettingsController($http,$q,settingsService,IPResolverService){
   }
 
   function callTest(number){
+    
+    //Soundtouch selected -> stop search ; 
+    if(vm.testIp.stop){vm.scanProgress = false;return;}
+
     vm.testIp.progress = number;
     vm.testIp.progressPourcent = Math.round(number*100/254);
     vm.testIp.ip = ips[number];
@@ -71,6 +85,7 @@ function SettingsController($http,$q,settingsService,IPResolverService){
           parser=new DOMParser();
           var xmlDoc = parser.parseFromString(response.data,"text/xml");
           var device = {};
+          device.myIp = vm.myIp;
           device.name = xmlDoc.getElementsByTagName("name")[0].childNodes[0].nodeValue;
           device.type = xmlDoc.getElementsByTagName("type")[0].childNodes[0].nodeValue;
           device.ipAddress = xmlDoc.getElementsByTagName("ipAddress")[0].childNodes[0].nodeValue;
@@ -88,6 +103,40 @@ function SettingsController($http,$q,settingsService,IPResolverService){
     }
   }
 
+  function manuallySet(){
+    vm.manually = !vm.manually;
+  }
+
+  function testManualIp(){
+    vm.devices = [];
+    if(vm.ipToTest == ""){
+      vm.testIpResult = "No ip set !";
+    }else if(!ValidateIPaddress(vm.ipToTest)){
+      vm.testIpResult = "Not valid ip set !";
+    }else{
+      vm.testIpResult = "Test :"+vm.ipToTest;
+      testIpAdresse(vm.ipToTest).then(function(response){
+        if(response && response.status == 200){
+          parser=new DOMParser();
+          var xmlDoc = parser.parseFromString(response.data,"text/xml");
+          var device = {};
+          device.name = xmlDoc.getElementsByTagName("name")[0].childNodes[0].nodeValue;
+          device.type = xmlDoc.getElementsByTagName("type")[0].childNodes[0].nodeValue;
+          device.ipAddress = xmlDoc.getElementsByTagName("ipAddress")[0].childNodes[0].nodeValue;
+          _gaq.push(['_trackEvent', device.name, 'find']);
+          vm.devices.push(device);
+          vm.manually = false;
+        }else{
+          vm.testIpResult = "No Soundtouch Find !";
+        }
+      }).catch(function() {
+        vm.testIpResult = "No Soundtouch Find !";
+      });
+    }
+    
+  }
+  
+
   function scanNetwork(){
     //Analytics send pushed button
     _gaq.push(['_trackEvent', "Scan Network Button", 'clicked']);
@@ -95,8 +144,11 @@ function SettingsController($http,$q,settingsService,IPResolverService){
     vm.devices = [];
     vm.scanProgress = true;
     vm.noDevice = false;
+    vm.testIp.stop = false;
+
     IPResolverService.resolve().then(function(ip) {
       console.log(ip);
+      vm.myIp = ip;
       _gaq.push(['_trackEvent', ip, 'user local ip']);
       if(ip && ValidateIPaddress(ip)){
         ip = ip.split(".");

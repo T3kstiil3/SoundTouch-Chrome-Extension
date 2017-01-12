@@ -397,6 +397,31 @@ header #settings_btn:hover{
   font-size: 16px;
 }
 
+.settings .manuallyButton{
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.settings .manuallySet{
+  margin-top: 20px;
+  text-align: center;
+}
+.settings .manuallySet label{
+  display: block;
+  margin: 10px auto;
+  width: 50%;
+}
+.settings .manuallySet input{
+  display: block;
+  margin: 10px auto;
+  width: 50%;
+}
+.settings .manuallySet button{
+  display: block;
+  width: 50%;
+  margin: 10px auto;
+}
+
 .settings .problem{
   margin-top: 20px;
   cursor: pointer;

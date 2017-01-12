@@ -210,8 +210,8 @@ function RemoteController($scope,$http,settingsService) {
           if(vm.source == "BLUETOOTH"){
             vm.track = xmlDoc.getElementsByTagName("stationName")[0].childNodes[0].nodeValue;
             vm.art = "img/bluetooth_bg.jpg";
-            vm.artist = "";
-            vm.album = "";
+            vm.artist = "__";
+            vm.album = "_____";
           }else{
             vm.track = xmlDoc.getElementsByTagName("track")[0].childNodes[0].nodeValue;
             vm.artist  = xmlDoc.getElementsByTagName("artist")[0].childNodes[0].nodeValue;
