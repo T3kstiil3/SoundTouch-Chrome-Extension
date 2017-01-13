@@ -7,3 +7,7 @@ electron-packager/
 locales/
 dist/
 node_modules/
+
+gulp/config.js
+
+SoundTouch-Chrome-Extension.zip
