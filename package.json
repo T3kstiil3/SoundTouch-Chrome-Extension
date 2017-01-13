@@ -1,7 +1,7 @@
 {
   "name": "SoundTouch-Remote-Control",
   "description": "The SoundTouch remote control will enable all the people connected to your network to control your Bose speaker.",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "author": "Aurélien Loyer <aur.loy@gmail.com>",
   "main": "main.js",
   "scripts": {
@@ -9,8 +9,8 @@
     "start": "electron .",
     "dev": "NODE_ENV='development' npm run start",
     "dist": "build -mwl --x64 --ia32",
-    "export" : "gulp export",
-    "zip" : "gulp zip"
+    "export": "gulp export",
+    "zip": "gulp zip"
   },
   "devDependencies": {
     "electron": "^1.4.6",
@@ -20,7 +20,21 @@
     "gulp-zip": "^3.2.0"
   },
   "dependencies": {
-    "electron-json-storage": "^2.1.0"
+    "electron-json-storage": "^2.1.0",
+    "fs": "0.0.1-security",
+    "gulp": "^3.9.1",
+    "gulp-bump": "^2.5.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-filter": "^5.0.0",
+    "gulp-git": "^1.12.0",
+    "gulp-replace-async": "0.0.1",
+    "gulp-tag-version": "^1.3.0",
+    "gulp-zip": "^3.2.0",
+    "https": "^1.0.0",
+    "require-dir": "^0.3.1",
+    "run-sequence": "^1.2.2",
+    "superagent": "^3.3.2",
+    "util": "^0.10.3"
   },
   "build": {
     "appId": "fr.aurelien-loyer",

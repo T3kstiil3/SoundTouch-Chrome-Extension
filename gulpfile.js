@@ -1,17 +1,9 @@
-const gulp = require('gulp');
-const zip = require('gulp-zip');
+var gulp = require('gulp');
+var requireDir = require('require-dir');
 
-gulp.task('export', () => {
+requireDir('./gulp/tasks', { recurse: true });
 
-});
- 
-gulp.task('zip', () => {
-    return gulp.src(['!node_modules','!node_modules/*','!dist','!dist/*','!main.js','!gulpfile.js','*','*/*'])
-        .pipe(zip(renderFileName()))
-        .pipe(gulp.dest('../'));
+gulp.task('test', () => {
+    console.log('test ok ! :D ');
 });
 
-function renderFileName(){
-    var utc = new Date().toJSON().slice(0,10);
-    return 'SoundTouch-Chrome-Extension-'+utc+'.zip';
-}
