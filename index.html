@@ -39,6 +39,8 @@
         <i class="fa fa-volume-down buttonRemote" ng-mouseup="remote.pushUpButton('VOLUME_DOWN')" ng-mousedown="remote.pushDownButton('VOLUME_DOWN')"></i>
         <div class="volumeBarContenair" ng-click="remote.setVolume($event)">
           <div class="volumeBar" style="width:{{remote.volumeBar}}%;"></div>
+          <div class="volumeCursor" draggable="true" style="left:{{remote.volumeBar}}%;"></div>
+          <input class="volumeRange" ng-change="remote.setVolume(remote.volumeBar)" ng-model="remote.volumeBar" type="range" min="0" max="100"/>
         </div>
         <i class="fa fa-volume-up buttonRemote" ng-mouseup="remote.pushUpButton('VOLUME_UP')" ng-mousedown="remote.pushDownButton('VOLUME_UP')"></i>
       </div>
@@ -149,7 +151,7 @@
       <h3 ng-if="vm.devices && vm.devices.length == 0 && !settings.scanProgress">No device found <i class="fa fa-frown-o"></i></h3>
 
       <button class="problem" ng-click="settings.sendEmail()">Problem ? Contact me ! <i class="fa fa-smile-o" aria-hidden="true"></i></button>
-      
+
       <a class="buttonLink" href="https://github.com/T3kstiil3/SoundTouch-Chrome-Extension/issues/new" target="_blank">
         <i class="fa fa-github" aria-hidden="true"></i>
         Create Github issue

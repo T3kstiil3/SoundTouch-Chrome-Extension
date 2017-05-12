@@ -50,6 +50,7 @@ function RemoteController($scope,$http,settingsService) {
   var timer;
   var time = 0;
   var totalTime = 0;
+  var volume2set = 0;
 
   //ELEMENT
   var loaderSettings = document.getElementById("loaderSettings");
@@ -147,7 +148,13 @@ function RemoteController($scope,$http,settingsService) {
   }
 
   function setVolume(event){
-    console.log(event);
+    if(isNaN(event)){
+      console.log(volume2set);
+      //TODO
+      // POST volume2set to SoundTouch 
+    }else{
+      volume2set = event;
+    }
   }
 
   function getPresets(){

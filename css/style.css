@@ -167,7 +167,7 @@ header #settings_btn:hover{
   font-size: 26px;
   color: #FF9A06;
   padding: 0px 20px;
-  margin: 0px auto 10px; 
+  margin: 0px auto 10px;
   display: block;
   width: 20%;
   cursor: pointer;
@@ -204,7 +204,56 @@ header #settings_btn:hover{
   height: 5px;
   margin: 10px 15px;
   border-radius: 20px;
+  position: relative;
 }
+
+.volumeControl .volumeCursor{
+  height: 16px;
+  background: #FF9929;
+  width: 16px;
+  border-radius: 50%;
+  position: absolute;
+  top: -5px;
+  cursor: -webkit-grab;
+}
+
+.volumeControl .volumeRange{
+  position: absolute;
+  top: -2px;
+  width: 98%;
+  margin-left: 1%;
+  opacity: 0;
+}
+.volumeControl .volumeRange[type=range]:focus {
+  outline: none;
+}
+.volumeControl .volumeRange[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+.volumeControl .volumeRange[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  background: #cdd9de;
+}
+
+.volumeControl .volumeRange[type=range]:focus::-webkit-slider-runnable-track {
+  background: #cdd9de;
+}
+
+.volumeControl .volumeRange[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+    border: 1px solid #000000;
+    height: 50px;
+    width: 16px;
+    border-radius: 3px;
+    background: #FF9800;
+    cursor: pointer;
+    margin-top: -5px;
+    opacity: 0;
+}
+
+
 
 .volumeControl .volumeBar{
   background: #708696;
@@ -212,6 +261,7 @@ header #settings_btn:hover{
   height: 5px;
   border-radius: 20px;
 }
+
 
 .trackControl{
   display: flex;
