@@ -150,8 +150,21 @@ function RemoteController($scope,$http,settingsService) {
   function setVolume(event){
     if(isNaN(event)){
       console.log(volume2set);
+      vm.volumeBar = volume2set;
       //TODO
-      // POST volume2set to SoundTouch 
+      // POST volume2set to SoundTouch
+      var url = 'http://'+vm.device.ipAddress+':8090/volume';
+      var data = '<?xml version="1.0" encoding="UTF-8" ?><volume>'+volume2set+'</volume>';
+      $http({
+          method: 'POST',
+          url: url,
+          data: data,
+          headers: { "Content-Type": 'application/xml' }
+      }).then(function(){
+        setTimeout(function() { getNowPlaying(); }, 500);
+        //Analytics send pushed button
+        _gaq.push(['_trackEvent', 'volume slider', 'clicked']);
+      });
     }else{
       volume2set = event;
     }
