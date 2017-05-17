@@ -5,6 +5,10 @@ gulp.task('publish/patch', function(callback) {
     runSequence('clean', 'patch', 'pack', 'deploy', callback);
 });
 
+gulp.task('patch/zip', function(callback) {
+    runSequence('clean', 'patch', 'zip', callback);
+});
+
 gulp.task('publish/feature', function(callback) {
     runSequence('clean', 'feature', 'pack', 'deploy', callback);
 });
