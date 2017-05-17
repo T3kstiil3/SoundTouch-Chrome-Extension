@@ -40,6 +40,7 @@
         <div class="volumeBarContenair" ng-click="remote.setVolume($event)">
           <div class="volumeBar" style="width:{{remote.volumeBar}}%;"></div>
           <div class="volumeCursor" draggable="true" style="left:{{remote.volumeBar}}%;"></div>
+          <span class="volumePopup" style="left:{{remote.volumeBar}}%;">{{remote.volumeBar}} %</span>
           <input class="volumeRange" ng-change="remote.setVolume(remote.volumeBar)" ng-model="remote.volumeBar" type="range" min="0" max="100"/>
         </div>
         <i class="fa fa-volume-up buttonRemote" ng-mouseup="remote.pushUpButton('VOLUME_UP')" ng-mousedown="remote.pushDownButton('VOLUME_UP')"></i>
