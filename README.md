@@ -1,5 +1,7 @@
 # SoundTouch-Chrome-Extension
 
+![users](https://img.shields.io/chrome-web-store/users/gapfkijlllenhmgddoldcfedfiiakfgg.svg) ![version](https://img.shields.io/chrome-web-store/v/gapfkijlllenhmgddoldcfedfiiakfgg.svg) ![ratingscount](https://img.shields.io/chrome-web-store/rating-count/gapfkijlllenhmgddoldcfedfiiakfgg.svg) ![rating](https://img.shields.io/chrome-web-store/rating/gapfkijlllenhmgddoldcfedfiiakfgg.svg) 
+
 [Link Chrome Extension](https://chrome.google.com/webstore/detail/soundtouch-chrome-extensi/gapfkijlllenhmgddoldcfedfiiakfgg)
 
 # Description
