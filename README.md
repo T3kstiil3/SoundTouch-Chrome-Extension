@@ -1,8 +1,9 @@
 # SoundTouch-Chrome-Extension
 
-![users](https://img.shields.io/chrome-web-store/users/gapfkijlllenhmgddoldcfedfiiakfgg.svg) ![version](https://img.shields.io/chrome-web-store/v/gapfkijlllenhmgddoldcfedfiiakfgg.svg) ![ratingscount](https://img.shields.io/chrome-web-store/rating-count/gapfkijlllenhmgddoldcfedfiiakfgg.svg) ![rating](https://img.shields.io/chrome-web-store/rating/gapfkijlllenhmgddoldcfedfiiakfgg.svg) 
 
-[Link Chrome Extension](https://chrome.google.com/webstore/detail/soundtouch-chrome-extensi/gapfkijlllenhmgddoldcfedfiiakfgg)
+[![users](https://img.shields.io/chrome-web-store/users/gapfkijlllenhmgddoldcfedfiiakfgg.svg) ![version](https://img.shields.io/chrome-web-store/v/gapfkijlllenhmgddoldcfedfiiakfgg.svg) ![ratingscount](https://img.shields.io/chrome-web-store/rating-count/gapfkijlllenhmgddoldcfedfiiakfgg.svg) ![rating](https://img.shields.io/chrome-web-store/rating/gapfkijlllenhmgddoldcfedfiiakfgg.svg) ](https://chrome.google.com/webstore/detail/soundtouch-chrome-extensi/gapfkijlllenhmgddoldcfedfiiakfgg)
+
+[![ChromeStore](https://camo.githubusercontent.com/a274169c415823acad4f50412d374f74ef58c3e6/68747470733a2f2f646576656c6f7065722e6368726f6d652e636f6d2f77656273746f72652f696d616765732f4368726f6d6557656253746f72655f42616467655f76325f3230367835382e706e67)](https://chrome.google.com/webstore/detail/soundtouch-chrome-extensi/gapfkijlllenhmgddoldcfedfiiakfgg)
 
 # Description
 
